@@ -8,10 +8,9 @@ export default async function handler(req, res) {
 
   if (!r.ok) return res.status(200).json({ empty: true });
 
-  const j = await r.json(); // { result: ... }
+  const j = await r.json();
   let result = j.result;
 
-  // ✅ Upstash đôi khi trả result dạng string JSON → parse sang object
   if (typeof result === "string") {
     try { result = JSON.parse(result); } catch {}
   }
