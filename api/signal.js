@@ -1,12 +1,13 @@
-let latestSignal = null;
+export default async function handler(req, res) {
+  const key = "signal:latest";
 
-export function setLatestSignal(data) {
-  latestSignal = data;
-}
+  const r = await fetch(
+    `${process.env.UPSTASH_REDIS_REST_URL}/get/${encodeURIComponent(key)}`,
+    {
+      headers: { Authorization: `Bearer ${process.env.UPSTASH_REDIS_REST_TOKEN}` }
+    }
+  );
 
-export default function handler(req, res) {
-  if (req.method === "GET") {
-    return res.status(200).json(latestSignal || { empty: true });
-  }
-  return res.status(405).end();
+  const j = await r.json(); // { result: ... }
+  return res.status(200).json(j.result || { empty: true });
 }
