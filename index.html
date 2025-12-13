@@ -401,44 +401,34 @@ main a:hover{
             </span>
           </div>
           <!-- Signal box (auto update) -->
-          <div class="mt-4 w-full max-w-sm mx-auto rounded-2xl border border-slate-600/60 bg-slate-950/55 backdrop-blur-xl shadow-xl shadow-black/30 overflow-hidden">
-            <div class="px-4 py-3 flex items-center justify-between border-b border-white/10">
-              <div class="flex items-center gap-2">
-                <span class="inline-flex h-2 w-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                <span class="text-sm font-semibold text-slate-100">Signal mới nhất</span>
-              </div>
-              <span id="signalTime" class="text-[11px] text-slate-300/80">—</span>
-            </div>
+         <div class="signal-box">
+  <div class="signal-header">
+    <div class="signal-title">● Signal mới nhất</div>
+    <div class="signal-time" id="sigTime">-</div>
+  </div>
 
-            <div class="p-4 space-y-2">
-              <div class="flex items-center justify-between">
-                <div class="text-xs text-slate-300/80">Cặp</div>
-                <div id="signalPair" class="text-sm font-semibold text-slate-100">—</div>
-              </div>
-              <div class="flex items-center justify-between">
-                <div class="text-xs text-slate-300/80">Hướng</div>
-                <div id="signalSide" class="text-sm font-semibold text-slate-100">—</div>
-              </div>
-              <div class="flex items-center justify-between">
-                <div class="text-xs text-slate-300/80">Entry</div>
-                <div id="signalEntry" class="text-sm font-semibold text-slate-100">—</div>
-              </div>
+  <div class="signal-grid">
+    <div class="label">Cặp</div><div class="value" id="sigPair">-</div>
+    <div class="label">Hướng</div><div class="value" id="sigSide">-</div>
+    <div class="label">Khung</div><div class="value" id="sigTf">-</div>
+    <div class="label">Entry</div><div class="value" id="sigEntry">-</div>
+  </div>
 
-              <div class="mt-3 rounded-xl bg-white/5 border border-white/10 p-3">
-                <div class="text-[11px] uppercase tracking-widest text-slate-300/70">Ghi chú</div>
-                <div id="signalNote" class="mt-1 text-xs text-slate-200/90">Chưa có signal. Đợi TradingView bắn webhook…</div>
-              </div>
-            </div>
+  <div class="signal-note">
+    <div class="label">GHI CHÚ</div>
+    <div class="note" id="sigNote">Chưa có signal.</div>
+  </div>
 
-            <div class="px-4 py-3 border-t border-white/10 flex items-center justify-between">
-              <div class="text-[11px] text-slate-300/80">Tự refresh mỗi 3s</div>
-              <button id="signalRefreshBtn" class="text-[11px] font-semibold text-emerald-300 hover:text-emerald-200 transition">
-                Refresh
-              </button>
-            </div>
-          </div>
+  <div class="signal-footer">
+    <div class="hint">Tự refresh mỗi 3s</div>
+    <button id="sigRefreshBtn" class="btn-refresh">Refresh</button>
+  </div>
 
-        </div>
+  <div class="history-wrap">
+    <div class="history-title">Lịch sử (10)</div>
+    <div id="sigHistory"></div>
+  </div>
+</div>
       </section>
     </main>
   </div>
@@ -523,46 +513,81 @@ main a:hover{
 })();
 </script>
 
-  <script>
-    // ===== Signal auto-fetch (/api/signal) =====
-    const $ = (id) => document.getElementById(id);
+ <script>
+  const $ = (id) => document.getElementById(id);
 
-    function fmtTime(ts){
-      try{
-        const d = new Date(ts);
-        if(isNaN(d.getTime())) return "—";
-        return d.toLocaleString("vi-VN", { hour12: false });
-      }catch(e){ return "—"; }
+  function fmtTime(ms){
+    if(!ms) return "-";
+    const d = new Date(ms);
+    return d.toLocaleString("vi-VN");
+  }
+
+  function badgeSide(side){
+    const s = (side || "-").toUpperCase();
+    if(s === "LONG") return `<span class="badge badge-long">LONG</span>`;
+    if(s === "SHORT") return `<span class="badge badge-short">SHORT</span>`;
+    return `<span class="badge badge-neutral">${s}</span>`;
+  }
+
+  function safe(v){ return (v === undefined || v === null || v === "") ? "-" : String(v); }
+
+  async function loadLatest(){
+    const r = await fetch("/api/signal", { cache: "no-store" });
+    let s = await r.json();
+    if(typeof s === "string"){ try{s = JSON.parse(s)}catch{} }
+
+    if(!s || s.empty){
+      $("sigPair").textContent = "-";
+      $("sigSide").innerHTML = badgeSide("-");
+      $("sigTf").textContent = "-";
+      $("sigEntry").textContent = "-";
+      $("sigNote").textContent = "Chưa có signal.";
+      $("sigTime").textContent = "-";
+      return;
     }
 
-    async function fetchSignal(){
-      try{
-        const res = await fetch("/api/signal", { cache: "no-store" });
-        const data = await res.json();
-        if(!data || data.empty) return;
+    $("sigPair").textContent = safe(s.pair);
+    $("sigSide").innerHTML = badgeSide(s.side);
+    $("sigTf").textContent = safe(s.timeframe || s.tf);
+    $("sigEntry").textContent = safe(s.entry);
+    $("sigNote").textContent = safe(s.note || "Đã cập nhật signal mới.");
+    $("sigTime").textContent = fmtTime(s.updatedAt);
+  }
 
-        $("signalPair").textContent = data.pair || data.symbol || data.ticker || "—";
-        $("signalSide").textContent = (data.side || data.action || "—").toString().toUpperCase();
-        $("signalEntry").textContent = data.entry || data.price || data.entryPrice || "—";
+  async function loadHistory(){
+    const r = await fetch("/api/signals", { cache: "no-store" });
+    const j = await r.json();
+    const items = Array.isArray(j.items) ? j.items : [];
 
-        const note = data.note || data.message || data.strategy || "";
-        $("signalNote").textContent = note ? note : "Đã cập nhật signal mới.";
-        $("signalTime").textContent = fmtTime(data.updatedAt || Date.now());
+    const html = items.map((x) => {
+      const side = (x.side || "-").toUpperCase();
+      const cls = side === "LONG" ? "h-long" : side === "SHORT" ? "h-short" : "h-neutral";
+      return `
+        <div class="h-item ${cls}">
+          <div class="h-row">
+            <div class="h-left">
+              <div class="h-pair">${safe(x.pair)}</div>
+              <div class="h-meta">${safe(x.timeframe || x.tf)} • ${fmtTime(x.updatedAt)}</div>
+            </div>
+            <div class="h-right">${badgeSide(x.side)}</div>
+          </div>
+          <div class="h-entry">Entry: <b>${safe(x.entry)}</b></div>
+        </div>
+      `;
+    }).join("");
 
-        // màu theo LONG/SHORT
-        const side = $("signalSide").textContent;
-        $("signalSide").className = "text-sm font-semibold " + (side.includes("SHORT") ? "text-rose-300" : side.includes("LONG") ? "text-emerald-300" : "text-slate-100");
-      }catch(e){
-        // ignore
-      }
-    }
+    $("sigHistory").innerHTML = html || `<div class="h-empty">Chưa có lịch sử.</div>`;
+  }
 
-    const btn = document.getElementById("signalRefreshBtn");
-    if(btn) btn.addEventListener("click", fetchSignal);
+  async function refreshAll(){
+    await loadLatest();
+    await loadHistory();
+  }
 
-    setInterval(fetchSignal, 3000);
-    fetchSignal();
-  </script>
+  $("sigRefreshBtn")?.addEventListener("click", refreshAll);
 
+  setInterval(refreshAll, 3000);
+  refreshAll();
+</script>
 </body>
 </html>
