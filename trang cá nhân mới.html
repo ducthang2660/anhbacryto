@@ -1,0 +1,1163 @@
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portfolio - Anh Ba Crypto</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.2.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap');
+
+        :root {
+            --gold: #FFD700;
+            --orange: #FF8C00;
+            --dark: #050510;
+            --card-bg: rgba(255,255,255,0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--dark);
+            overflow-x: hidden;
+            color: #fff;
+        }
+
+        /* ===== JELLYFISH CANVAS ===== */
+        #jellyfishCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ===== DEEP SEA BG ===== */
+        .deep-sea-bg {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 20% 50%, rgba(0,80,160,0.35) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(80,0,160,0.3) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 100%, rgba(0,40,120,0.5) 0%, transparent 60%),
+                linear-gradient(180deg, #000510 0%, #020820 30%, #010618 60%, #000510 100%);
+        }
+
+        /* Bioluminescent shimmer */
+        .bio-shimmer {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            background:
+                radial-gradient(ellipse at 30% 40%, rgba(0,200,255,0.04) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(150,0,255,0.04) 0%, transparent 50%);
+            animation: shimmerPulse 8s ease-in-out infinite alternate;
+        }
+        @keyframes shimmerPulse {
+            0%   { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Floating plankton dots */
+        .plankton-layer {
+            position: fixed;
+            inset: 0;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .plankton {
+            position: absolute;
+            border-radius: 50%;
+            animation: planktonFloat linear infinite;
+        }
+        @keyframes planktonFloat {
+            0%   { transform: translateY(110vh) translateX(0) scale(0); opacity: 0; }
+            5%   { opacity: 1; }
+            90%  { opacity: 0.6; }
+            100% { transform: translateY(-10vh) translateX(var(--px)) scale(1); opacity: 0; }
+        }
+
+        /* Light rays from above */
+        .light-rays {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 60%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .ray {
+            position: absolute;
+            top: -20px;
+            width: 3px;
+            height: 80%;
+            background: linear-gradient(180deg, rgba(100,200,255,0.18), transparent);
+            border-radius: 2px;
+            transform-origin: top center;
+            animation: rayDrift ease-in-out infinite alternate;
+        }
+        @keyframes rayDrift {
+            0%   { opacity: 0.2; transform: rotate(var(--ra)) scaleX(1); }
+            100% { opacity: 0.6; transform: rotate(calc(var(--ra) + 4deg)) scaleX(1.5); }
+        }
+
+        /* ===== CONTENT ===== */
+        .content {
+            position: relative;
+            z-index: 10;
+            min-height: 100vh;
+        }
+
+        /* ===== NAVBAR ===== */
+        nav {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            z-index: 100;
+            padding: 16px 40px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(180deg, rgba(0,5,20,0.85), transparent);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(0,200,255,0.08);
+        }
+        .nav-logo {
+            font-family: 'Bangers', cursive;
+            font-size: 30px;
+            letter-spacing: 3px;
+            background: linear-gradient(90deg, #00e5ff, #a855f7, #00e5ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logoShine 4s linear infinite;
+            filter: drop-shadow(0 0 10px rgba(0,229,255,0.6));
+        }
+        @keyframes logoShine {
+            0%   { background-position: 0% center; }
+            100% { background-position: 200% center; }
+        }
+        .nav-links {
+            display: flex;
+            gap: 28px;
+            list-style: none;
+        }
+        .nav-links a {
+            color: rgba(200,240,255,0.8);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 14px;
+            letter-spacing: 1px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+        .nav-links a:hover {
+            color: #00e5ff;
+            text-shadow: 0 0 12px rgba(0,229,255,0.8);
+        }
+        .nav-cta {
+            background: linear-gradient(135deg, #00e5ff, #a855f7) !important;
+            color: #000 !important;
+            padding: 8px 22px;
+            border-radius: 25px;
+            font-weight: 800 !important;
+            box-shadow: 0 0 18px rgba(0,229,255,0.35);
+            transition: transform 0.2s, box-shadow 0.2s !important;
+            -webkit-text-fill-color: #000 !important;
+        }
+        .nav-cta:hover {
+            transform: scale(1.06) !important;
+            box-shadow: 0 0 28px rgba(0,229,255,0.6) !important;
+        }
+
+        /* ===== HERO ===== */
+        #hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 100px 5% 60px;
+        }
+        .hero-content { max-width: 600px; }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(0,229,255,0.1);
+            border: 1px solid rgba(0,229,255,0.35);
+            border-radius: 30px;
+            padding: 6px 18px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #00e5ff;
+            margin-bottom: 22px;
+            animation: badgePulse 2.5s ease-in-out infinite;
+        }
+        @keyframes badgePulse {
+            0%,100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.3); }
+            50%     { box-shadow: 0 0 0 10px rgba(0,229,255,0); }
+        }
+        .hero-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(52px, 9vw, 96px);
+            line-height: 1;
+            letter-spacing: 3px;
+            margin-bottom: 12px;
+        }
+        .title-line-1 { color: #fff; display: block; }
+        .title-line-2 {
+            display: block;
+            background: linear-gradient(90deg, #00e5ff, #a855f7, #00e5ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logoShine 3s linear infinite;
+        }
+        .hero-subtitle {
+            font-size: 18px;
+            color: rgba(200,240,255,0.75);
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+        .hero-quote {
+            font-size: 15px;
+            font-style: italic;
+            color: rgba(0,229,255,0.85);
+            border-left: 3px solid #00e5ff;
+            padding-left: 14px;
+            margin-bottom: 36px;
+        }
+        .hero-btns { display: flex; gap: 16px; flex-wrap: wrap; }
+        .btn-primary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #00e5ff, #a855f7);
+            color: #000;
+            font-weight: 800; font-size: 15px;
+            padding: 14px 32px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 24px rgba(0,229,255,0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-primary:hover {
+            transform: translateY(-3px) scale(1.03);
+            box-shadow: 0 8px 36px rgba(0,229,255,0.55);
+        }
+        .btn-secondary {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(0,229,255,0.08);
+            border: 2px solid rgba(0,229,255,0.4);
+            color: #00e5ff;
+            font-weight: 700; font-size: 15px;
+            padding: 14px 28px;
+            border-radius: 50px;
+            text-decoration: none;
+            backdrop-filter: blur(6px);
+            transition: border-color 0.3s, background 0.3s, transform 0.2s;
+        }
+        .btn-secondary:hover {
+            border-color: #a855f7;
+            background: rgba(168,85,247,0.15);
+            transform: translateY(-3px);
+            color: #a855f7;
+        }
+
+        /* ===== DIVIDER ===== */
+        .section-divider {
+            position: relative; z-index: 5;
+            padding: 20px 5%;
+            display: flex; align-items: center; gap: 16px;
+        }
+        .divider-line {
+            flex: 1; height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0,229,255,0.4), transparent);
+        }
+        .divider-icon {
+            color: #00e5ff; font-size: 22px;
+            animation: spinGlow 4s linear infinite;
+        }
+        @keyframes spinGlow {
+            0%   { transform: rotate(0); filter: drop-shadow(0 0 4px #00e5ff); }
+            100% { transform: rotate(360deg); filter: drop-shadow(0 0 14px #a855f7); }
+        }
+
+        /* ===== CARDS ===== */
+        .cards-section {
+            position: relative; z-index: 5;
+            padding: 20px 5% 60px;
+        }
+        .section-title {
+            font-family: 'Bangers', cursive;
+            font-size: clamp(32px, 5vw, 54px);
+            letter-spacing: 2px;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, #00e5ff, #fff, #a855f7, #00e5ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: logoShine 4s linear infinite;
+        }
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        .card {
+            background: rgba(0,229,255,0.04);
+            border: 1px solid rgba(0,229,255,0.15);
+            border-radius: 22px;
+            padding: 28px;
+            backdrop-filter: blur(16px);
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+            position: relative; overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(circle at 0% 0%, rgba(0,229,255,0.07), transparent 60%);
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(0,229,255,0.5);
+            box-shadow: 0 10px 40px rgba(0,229,255,0.15), 0 0 60px rgba(168,85,247,0.1);
+        }
+        .card:hover::before { opacity: 1; }
+        .card-icon {
+            width: 52px; height: 52px;
+            background: linear-gradient(135deg, #00e5ff, #a855f7);
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 24px; margin-bottom: 16px;
+            box-shadow: 0 4px 18px rgba(0,229,255,0.3);
+        }
+        .card-icon i { color: #000; }
+        .card-title {
+            font-family: 'Bangers', cursive;
+            font-size: 24px; letter-spacing: 1px;
+            color: #00e5ff; margin-bottom: 12px;
+        }
+        .card-text {
+            font-size: 14px; line-height: 1.7;
+            color: rgba(200,240,255,0.78);
+        }
+
+        /* ===== SKILL BARS ===== */
+        .skill-list { margin-top: 14px; display: flex; flex-direction: column; gap: 13px; }
+        .skill-item label {
+            display: flex; justify-content: space-between;
+            font-size: 13px; font-weight: 700;
+            color: rgba(200,240,255,0.9); margin-bottom: 5px;
+        }
+        .skill-bar {
+            height: 8px;
+            background: rgba(0,229,255,0.1);
+            border-radius: 10px; overflow: hidden;
+        }
+        .skill-fill {
+            height: 100%; border-radius: 10px;
+            background: linear-gradient(90deg, #00e5ff, #a855f7);
+            box-shadow: 0 0 10px rgba(0,229,255,0.5);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 1.3s cubic-bezier(0.4,0,0.2,1);
+        }
+
+        /* ===== PROJECTS ===== */
+        .project-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+        }
+        .project-card {
+            background: rgba(0,229,255,0.03);
+            border: 1px solid rgba(0,229,255,0.12);
+            border-radius: 22px; overflow: hidden;
+            transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+        }
+        .project-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: #00e5ff;
+            box-shadow: 0 12px 44px rgba(0,229,255,0.2), 0 0 60px rgba(168,85,247,0.12);
+        }
+        .project-thumb { width: 100%; height: 170px; object-fit: cover; }
+        .project-body { padding: 20px; }
+        .project-tag {
+            display: inline-block;
+            background: rgba(0,229,255,0.15);
+            color: #00e5ff;
+            font-size: 11px; font-weight: 800; letter-spacing: 1px;
+            padding: 3px 12px; border-radius: 20px; margin-bottom: 10px;
+        }
+        .project-title {
+            font-family: 'Bangers', cursive;
+            font-size: 22px; color: #fff;
+            margin-bottom: 8px; letter-spacing: 1px;
+        }
+        .project-desc {
+            font-size: 13px; color: rgba(200,240,255,0.7); line-height: 1.6;
+        }
+        .project-links { display: flex; gap: 10px; margin-top: 16px; }
+        .project-link {
+            display: inline-flex; align-items: center; gap: 5px;
+            padding: 7px 16px; border-radius: 20px;
+            font-size: 13px; font-weight: 700;
+            text-decoration: none; transition: transform 0.2s;
+        }
+        .project-link:hover { transform: scale(1.05); }
+        .pl-live { background: linear-gradient(135deg, #00e5ff, #a855f7); color: #000; }
+        .pl-code { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; }
+
+        /* ===== CONTACT ===== */
+        .contact-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px; align-items: start;
+        }
+        .contact-info { display: flex; flex-direction: column; gap: 16px; }
+        .contact-item {
+            display: flex; align-items: center; gap: 14px;
+            background: rgba(0,229,255,0.04);
+            border: 1px solid rgba(0,229,255,0.12);
+            border-radius: 14px; padding: 14px 18px;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .contact-item:hover {
+            border-color: #00e5ff;
+            box-shadow: 0 0 20px rgba(0,229,255,0.15);
+        }
+        .contact-item i { font-size: 22px; color: #00e5ff; }
+        .contact-item span { font-size: 14px; color: rgba(200,240,255,0.85); font-weight: 600; }
+        .contact-form { display: flex; flex-direction: column; gap: 14px; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            background: rgba(0,229,255,0.05);
+            border: 1px solid rgba(0,229,255,0.18);
+            border-radius: 12px;
+            padding: 13px 16px;
+            color: #fff;
+            font-family: 'Nunito', sans-serif;
+            font-size: 14px; outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-group input::placeholder, .form-group textarea::placeholder {
+            color: rgba(200,240,255,0.4);
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            border-color: #00e5ff;
+            box-shadow: 0 0 16px rgba(0,229,255,0.25);
+        }
+        .form-group textarea { height: 120px; resize: none; }
+        .btn-send {
+            background: linear-gradient(135deg, #00e5ff, #a855f7);
+            color: #000; font-weight: 800; font-size: 15px;
+            padding: 14px; border: none; border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .btn-send:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(0,229,255,0.4);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            position: relative; z-index: 5;
+            text-align: center;
+            padding: 30px;
+            border-top: 1px solid rgba(0,229,255,0.1);
+            font-size: 13px; color: rgba(200,240,255,0.4);
+        }
+        footer span { color: #00e5ff; }
+
+        /* ===== SCROLL TOP ===== */
+        #scrollTop {
+            position: fixed;
+            bottom: 30px; right: 30px;
+            z-index: 200;
+            width: 46px; height: 46px;
+            background: linear-gradient(135deg, #00e5ff, #a855f7);
+            border: none; border-radius: 50%;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #000;
+            box-shadow: 0 4px 20px rgba(0,229,255,0.4);
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        #scrollTop.show { opacity: 1; transform: translateY(0); }
+        #scrollTop:hover { transform: scale(1.12); }
+
+        /* ===== MOBILE ===== */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            #hero { padding-top: 100px; }
+            .contact-wrap { grid-template-columns: 1fr; }
+        }
+
+        /* ===== STAT NUMBER ===== */
+        .stat-num {
+            font-family: 'Bangers', cursive;
+            font-size: 40px;
+            line-height: 1;
+        }
+        .stat-label {
+            font-size: 13px;
+            color: rgba(200,240,255,0.7);
+        }
+        .stat-row {
+            display: flex; align-items: center; gap: 12px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- DEEP SEA BACKGROUND -->
+<div class="deep-sea-bg"></div>
+<div class="bio-shimmer"></div>
+
+<!-- LIGHT RAYS -->
+<div class="light-rays" id="lightRays"></div>
+
+<!-- PLANKTON -->
+<div class="plankton-layer" id="planktonLayer"></div>
+
+<!-- JELLYFISH CANVAS -->
+<canvas id="jellyfishCanvas"></canvas>
+
+<!-- NAVBAR -->
+<nav>
+    <div class="nav-logo">🪼 ANH BA CRYPTO</div>
+    <ul class="nav-links">
+        <li><a href="#hero">Home</a></li>
+        <li><a href="#about">Về mình</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Dự án</a></li>
+        <li><a href="#contact" class="nav-cta">Liên hệ</a></li>
+    </ul>
+</nav>
+
+<!-- CONTENT -->
+<div class="content">
+
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-content">
+            <div class="hero-badge">
+                <i class="ri-bubble-chart-fill"></i> Fullstack Developer · Open to Work
+            </div>
+            <h1 class="hero-title">
+                <span class="title-line-1">Xin chào,</span>
+                <span class="title-line-2">Tôi là Anh Ba Crypto!</span>
+            </h1>
+            <p class="hero-subtitle">Fullstack Web Developer · UI/UX Enthusiast</p>
+            <p class="hero-quote">
+                "Code không chỉ là nghề — đó là nghệ thuật dưới lòng đại dương." 🪼
+            </p>
+            <div class="hero-btns">
+                <a href="#projects" class="btn-primary">
+                    <i class="ri-rocket-2-fill"></i> Xem dự án
+                </a>
+                <a href="#contact" class="btn-secondary">
+                    <i class="ri-mail-send-line"></i> Liên hệ ngay
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <div class="divider-line"></div>
+        <i class="ri-compass-3-fill divider-icon"></i>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- ABOUT -->
+    <section id="about" class="cards-section">
+        <h2 class="section-title">🪼 Về Bản Thân</h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon"><i class="ri-user-smile-fill"></i></div>
+                <div class="card-title">Tôi là ai?</div>
+                <p class="card-text">
+                    Mình là một <strong style="color:#00e5ff">Fullstack Developer</strong> đam mê xây dựng những sản phẩm web đẹp và hiệu năng cao.
+                    Như những con sứa trôi tự do — mình luôn linh hoạt, sáng tạo và không ngại thử thách mới! 🌊
+                </p>
+                <br>
+                <p class="card-text">
+                    🎓 Tốt nghiệp CNTT · 1+ năm kinh nghiệm<br>
+                    🌏 Làm việc remote toàn cầu<br>
+                    🎮 Yêu trade, code và cà phê
+                </p>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="ri-trophy-fill"></i></div>
+                <div class="card-title">Thành tích</div>
+                <div style="display:flex;flex-direction:column;gap:16px;margin-top:4px">
+                    <div class="stat-row">
+                        <div class="stat-num" style="color:#00e5ff">10+</div>
+                        <div class="stat-label">Dự án hoàn thành</div>
+                    </div>
+                    <div class="stat-row">
+                        <div class="stat-num" style="color:#a855f7">30+</div>
+                        <div class="stat-label">Khách hàng hài lòng</div>
+                    </div>
+                    <div class="stat-row">
+                        <div class="stat-num" style="color:#fff">1+</div>
+                        <div class="stat-label">Năm kinh nghiệm</div>
+                    </div>
+                    <div class="stat-row">
+                        <div class="stat-num" style="color:#00e5ff">∞</div>
+                        <div class="stat-label">Đam mê không giới hạn</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="ri-heart-3-fill"></i></div>
+                <div class="card-title">Triết lý</div>
+                <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
+                    <div style="display:flex;align-items:flex-start;gap:10px">
+                        <span style="font-size:18px">🔵</span>
+                        <p class="card-text"><strong style="color:#00e5ff">Không bao giờ từ bỏ</strong> — Dù bug khó đến đâu cũng phải fix bằng được.</p>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px">
+                        <span style="font-size:18px">🌊</span>
+                        <p class="card-text"><strong style="color:#00e5ff">Luôn học hỏi</strong> — Tech stack mới nào cũng sẵn sàng chinh phục.</p>
+                    </div>
+                    <div style="display:flex;align-items:flex-start;gap:10px">
+                        <span style="font-size:18px">✨</span>
+                        <p class="card-text"><strong style="color:#00e5ff">Tự do sáng tạo</strong> — Code không chỉ là nghề, đó là nghệ thuật.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <div class="divider-line"></div>
+        <i class="ri-code-s-slash-fill divider-icon"></i>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- SKILLS -->
+    <section id="skills" class="cards-section" style="padding-top:10px">
+        <h2 class="section-title">🛠️ Kỹ Năng</h2>
+        <div class="grid-3">
+            <div class="card">
+                <div class="card-icon"><i class="ri-layout-fill"></i></div>
+                <div class="card-title">Frontend</div>
+                <div class="skill-list">
+                    <div class="skill-item">
+                        <label><span>HTML / CSS</span><span>60%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.95"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <label><span>JavaScript / TypeScript</span><span>80%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.90"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <label><span>React / Next.js</span><span>88%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.88"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <label><span>TailwindCSS</span><span>32%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.92"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="ri-server-fill"></i></div>
+                <div class="card-title">Backend</div>
+                <div class="skill-list">
+                    <div class="skill-item">
+                        <label><span>Node.js / Express</span><span>85%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.85"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <label><span>Python / Django</span><span>78%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.78"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <label><span>PostgreSQL / MongoDB</span><span>82%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.82"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <label><span>REST API / GraphQL</span><span>87%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.87"></div></div>
+                    </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-icon"><i class="ri-cloud-fill"></i></div>
+                <div class="card-title">DevOps & Tools</div>
+                <div class="skill-list">
+                    <div class="skill-item">
+                        <label><span>Git / GitHub</span><span>93%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.93"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <label><span>Docker / CI/CD</span><span>75%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.75"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <label><span>AWS / Vercel</span><span>72%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.72"></div></div>
+                    </div>
+                    <div class="skill-item">
+                        <label><span>Figma / UI Design</span><span>80%</span></label>
+                        <div class="skill-bar"><div class="skill-fill" data-width="0.80"></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <div class="divider-line"></div>
+        <i class="ri-rocket-2-fill divider-icon"></i>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="cards-section" style="padding-top:10px">
+        <h2 class="section-title">💻 Dự Án Nổi Bật</h2>
+        <div class="project-grid">
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&q=80" alt="E-Commerce" class="project-thumb">
+                <div class="project-body">
+                    <span class="project-tag">FULLSTACK</span>
+                    <div class="project-title">🛒 ANHBAShop E-Commerce</div>
+                    <p class="project-desc">Nền tảng thương mại điện tử hoàn chỉnh với Next.js, Stripe payments, real-time inventory và dashboard admin mạnh mẽ.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link pl-live"><i class="ri-external-link-fill"></i>Live Demo</a>
+                        <a href="#" class="project-link pl-code"><i class="ri-github-fill"></i>Source</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600&q=80" alt="Chat App" class="project-thumb">
+                <div class="project-body">
+                    <span class="project-tag">REALTIME</span>
+                    <div class="project-title">💬 GearChat App</div>
+                    <p class="project-desc">Ứng dụng chat realtime với Socket.io, video call WebRTC, end-to-end encryption và giao diện cực đỉnh.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link pl-live"><i class="ri-external-link-fill"></i>Live Demo</a>
+                        <a href="#" class="project-link pl-code"><i class="ri-github-fill"></i>Source</a>
+                    </div>
+                </div>
+            </div>
+            <div class="project-card">
+                <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80" alt="Dashboard" class="project-thumb">
+                <div class="project-body">
+                    <span class="project-tag">DASHBOARD</span>
+                    <div class="project-title">📊 DeepSea Analytics</div>
+                    <p class="project-desc">Dashboard phân tích dữ liệu với ECharts, AI insights, dark mode và export báo cáo PDF tự động theo lịch.</p>
+                    <div class="project-links">
+                        <a href="#" class="project-link pl-live"><i class="ri-external-link-fill"></i>Live Demo</a>
+                        <a href="#" class="project-link pl-code"><i class="ri-github-fill"></i>Source</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="section-divider">
+        <div class="divider-line"></div>
+        <i class="ri-map-pin-2-fill divider-icon"></i>
+        <div class="divider-line"></div>
+    </div>
+
+    <!-- CONTACT -->
+    <section id="contact" class="cards-section" style="padding-top:10px">
+        <h2 class="section-title">📡 Liên Hệ</h2>
+        <div class="contact-wrap">
+            <div class="contact-info">
+                <div class="card" style="margin-bottom:4px">
+                    <div class="card-title" style="margin-bottom:8px">Cùng nhau xây dựng điều gì đó!</div>
+                    <p class="card-text">Dù là dự án lớn hay nhỏ, mình luôn sẵn sàng lắng nghe và hiện thực hóa ý tưởng của bạn. Đừng ngại liên hệ! 🚀</p>
+                </div>
+                <div class="contact-item"><i class="ri-mail-fill"></i><span>anhbachacuvl20@gmail.com</span></div>
+                <div class="contact-item"><i class="ri-phone-fill"></i><span>+84 0353 xxx xxx</span></div>
+                <div class="contact-item"><i class="ri-map-pin-fill"></i><span>Hồ Chí Minh, Việt Nam 🇻🇳</span></div>
+                <div class="contact-item"><i class="ri-github-fill"></i><span>github.com/ducthang2660</span></div>
+                <div class="contact-item"><i class="ri-linkedin-fill"></i><span>linkedin.com/thangdeptrai470aa62a4</span></div>
+            </div>
+            <div class="contact-form">
+                <div class="form-group"><input type="text" placeholder="Tên của bạn 👤"></div>
+                <div class="form-group"><input type="email" placeholder="Email của bạn 📧"></div>
+                <div class="form-group"><input type="text" placeholder="Chủ đề 💡"></div>
+                <div class="form-group"><textarea placeholder="Nội dung tin nhắn... ✍️"></textarea></div>
+                <button class="btn-send" onclick="sendMsg(this)">
+                    <i class="ri-send-plane-fill"></i> Gửi tin nhắn
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>Made with <span>❤️ & 🪼 Deep Ocean Vibes</span> by <span>Nika Dev</span> · 2026</p>
+        <p style="margin-top:6px">🌊 "The ocean is endless — so is my passion for code." 🌊</p>
+    </footer>
+</div>
+
+<button id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+    <i class="ri-arrow-up-s-fill"></i>
+</button>
+
+<script>
+/* ============================================================
+   JELLYFISH ENGINE
+   ============================================================ */
+const canvas = document.getElementById('jellyfishCanvas');
+const ctx = canvas.getContext('2d');
+
+let W = canvas.width  = window.innerWidth;
+let H = canvas.height = window.innerHeight;
+
+window.addEventListener('resize', () => {
+    W = canvas.width  = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+});
+
+// Mouse / touch tracking
+const mouse = { x: W / 2, y: H / 2 };
+window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+window.addEventListener('touchmove', e => {
+    mouse.x = e.touches[0].clientX;
+    mouse.y = e.touches[0].clientY;
+}, { passive: true });
+
+/* ---------- Jellyfish class ---------- */
+class Jellyfish {
+    constructor(index, total) {
+        this.index   = index;
+        this.total   = total;
+        this.reset(true);
+    }
+
+    reset(init = false) {
+        this.x       = Math.random() * W;
+        this.y       = init ? Math.random() * H : H + 120;
+        this.baseR   = 28 + Math.random() * 38;       // bell radius
+        this.speed   = 0.3 + Math.random() * 0.5;
+        this.drift   = (Math.random() - 0.5) * 0.4;   // horizontal wander
+        this.phase   = Math.random() * Math.PI * 2;    // pulse phase
+        this.pulseSpd= 0.02 + Math.random() * 0.02;
+
+        // Colour family: cyan / violet / blue / pink
+        const palettes = [
+            { h: 185, s: 100, l: 65 },  // cyan
+            { h: 270, s: 90,  l: 70 },  // violet
+            { h: 210, s: 100, l: 65 },  // blue
+            { h: 310, s: 85,  l: 70 },  // pink
+        ];
+        this.col     = palettes[Math.floor(Math.random() * palettes.length)];
+        this.alpha   = 0.55 + Math.random() * 0.35;
+
+        // Tentacle count & length
+        this.tentacleCount = 6 + Math.floor(Math.random() * 6);
+        this.tentacleLen   = this.baseR * (1.8 + Math.random() * 1.4);
+
+        // Mouse-follow vars
+        this.vx      = 0;
+        this.vy      = 0;
+        this.attracted = false;
+    }
+
+    /* -- lerp toward mouse when close -- */
+    updatePhysics() {
+        const dx = mouse.x - this.x;
+        const dy = mouse.y - this.y;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        const attractRadius = 200;
+
+        if (dist < attractRadius) {
+            // Gently steer toward cursor
+            const force = (1 - dist / attractRadius) * 0.018;
+            this.vx += dx * force;
+            this.vy += dy * force;
+            this.attracted = true;
+        } else {
+            // Natural upward float + gentle horizontal drift
+            this.vy -= this.speed * 0.1;
+            this.vx += this.drift * 0.05;
+            this.attracted = false;
+        }
+
+        // Damping
+        this.vx *= 0.92;
+        this.vy *= 0.92;
+
+        // Apply
+        this.x += this.vx;
+        this.y += this.vy + (this.attracted ? 0 : -this.speed * 0.4);
+
+        // Wrap horizontally
+        if (this.x < -100) this.x = W + 100;
+        if (this.x > W + 100) this.x = -100;
+
+        // Reset when off top
+        if (this.y < -200) this.reset(false);
+    }
+
+    draw() {
+        const t     = performance.now() * 0.001;
+        const pulse = Math.sin(t * 2 + this.phase);           // -1 to 1
+        const r     = this.baseR + pulse * this.baseR * 0.18; // breathing bell
+
+        const { h, s, l } = this.col;
+        const a = this.alpha;
+
+        ctx.save();
+        ctx.translate(this.x, this.y);
+
+        /* ---- Outer glow ---- */
+        const glow = ctx.createRadialGradient(0, 0, r * 0.1, 0, 0, r * 2.8);
+        glow.addColorStop(0, `hsla(${h},${s}%,${l}%,${a * 0.25})`);
+        glow.addColorStop(1, `hsla(${h},${s}%,${l}%,0)`);
+        ctx.beginPath();
+        ctx.arc(0, 0, r * 2.8, 0, Math.PI * 2);
+        ctx.fillStyle = glow;
+        ctx.fill();
+
+        /* ---- Bell body ---- */
+        const bellGrad = ctx.createRadialGradient(-r * 0.25, -r * 0.3, r * 0.05, 0, 0, r);
+        bellGrad.addColorStop(0, `hsla(${h},${s}%,${Math.min(l+20,95)}%,${a})`);
+        bellGrad.addColorStop(0.6, `hsla(${h},${s}%,${l}%,${a * 0.85})`);
+        bellGrad.addColorStop(1, `hsla(${h},${s}%,${l - 20}%,${a * 0.5})`);
+
+        ctx.beginPath();
+        // Top dome (semi-ellipse)
+        ctx.ellipse(0, 0, r, r * 0.72, 0, Math.PI, 0);
+        // Bottom skirt curve
+        ctx.bezierCurveTo(r, 0, r * 0.9, r * 0.35, 0, r * 0.38);
+        ctx.bezierCurveTo(-r * 0.9, r * 0.35, -r, 0, -r, 0);
+        ctx.fillStyle = bellGrad;
+        ctx.fill();
+
+        /* ---- Inner highlight ---- */
+        const hiGrad = ctx.createRadialGradient(-r * 0.2, -r * 0.28, 0, -r * 0.2, -r * 0.28, r * 0.55);
+        hiGrad.addColorStop(0, `hsla(${h},${s}%,98%,${a * 0.55})`);
+        hiGrad.addColorStop(1, `hsla(${h},${s}%,98%,0)`);
+        ctx.beginPath();
+        ctx.ellipse(-r * 0.2, -r * 0.28, r * 0.5, r * 0.32, 0, 0, Math.PI * 2);
+        ctx.fillStyle = hiGrad;
+        ctx.fill();
+
+        /* ---- Rim glow ---- */
+        ctx.beginPath();
+        ctx.ellipse(0, 0, r, r * 0.72, 0, Math.PI, 0);
+        ctx.strokeStyle = `hsla(${h},${s}%,90%,${a * 0.7})`;
+        ctx.lineWidth   = 1.5;
+        ctx.stroke();
+
+        /* ---- Tentacles ---- */
+        for (let i = 0; i < this.tentacleCount; i++) {
+            const angle = ((i / this.tentacleCount) - 0.5) * Math.PI * 0.9;
+            const sx    = Math.sin(angle) * r * 0.85;
+            const sy    = Math.cos(angle) * r * 0.18 + r * 0.28;
+
+            // Each tentacle waves with its own phase
+            const wavePhase = t * 1.4 + this.phase + i * 0.7;
+            const waveAmp   = this.tentacleLen * 0.18;
+
+            ctx.beginPath();
+            ctx.moveTo(sx, sy);
+
+            // 3-segment bezier tentacle
+            const segments = 4;
+            let px = sx, py = sy;
+            const segLen = this.tentacleLen / segments;
+
+            for (let s2 = 0; s2 < segments; s2++) {
+                const wave = Math.sin(wavePhase + s2 * 1.2) * waveAmp * (s2 + 1) / segments;
+                const nx   = sx + wave * 0.9 + (Math.sin(angle) * 0.3 * segLen * s2);
+                const ny   = sy + (s2 + 1) * segLen;
+                const cpx  = (px + nx) / 2 + wave;
+                const cpy  = (py + ny) / 2;
+                ctx.quadraticCurveTo(cpx, cpy, nx, ny);
+                px = nx; py = ny;
+            }
+
+            // Tentacle gradient: opaque at top, fade at bottom
+            const tGrad = ctx.createLinearGradient(sx, sy, px, py);
+            tGrad.addColorStop(0, `hsla(${h},${s}%,${l + 10}%,${a * 0.85})`);
+            tGrad.addColorStop(1, `hsla(${h},${s}%,${l}%,0)`);
+            ctx.strokeStyle = tGrad;
+            ctx.lineWidth   = 1.2 + Math.random() * 0.5;
+            ctx.lineCap     = 'round';
+            ctx.stroke();
+        }
+
+        /* ---- Spots / internal pattern ---- */
+        const spotCount = 3 + Math.floor(this.baseR / 15);
+        for (let i = 0; i < spotCount; i++) {
+            const sx2 = (Math.random() - 0.5) * r * 1.1;
+            const sy2 = (Math.random() - 0.5) * r * 0.5 - r * 0.1;
+            const sr  = r * 0.06 + Math.random() * r * 0.08;
+            ctx.beginPath();
+            ctx.arc(sx2, sy2, sr, 0, Math.PI * 2);
+            ctx.fillStyle = `hsla(${h},100%,95%,${a * 0.35})`;
+            ctx.fill();
+        }
+
+        ctx.restore();
+    }
+}
+
+/* ---------- Create jellies ---------- */
+const JELLY_COUNT = 18;
+const jellies = Array.from({ length: JELLY_COUNT }, (_, i) => new Jellyfish(i, JELLY_COUNT));
+
+/* ---------- Animation loop ---------- */
+function animate() {
+    // Semi-transparent clear for motion trail
+    ctx.fillStyle = 'rgba(0,0,0,0)';
+    ctx.clearRect(0, 0, W, H);
+
+    jellies.forEach(j => {
+        j.updatePhysics();
+        j.draw();
+    });
+
+    requestAnimationFrame(animate);
+}
+animate();
+
+/* ============================================================
+   LIGHT RAYS
+   ============================================================ */
+const raysContainer = document.getElementById('lightRays');
+for (let i = 0; i < 10; i++) {
+    const ray = document.createElement('div');
+    ray.className = 'ray';
+    const left  = 10 + Math.random() * 80;
+    const angle = -20 + Math.random() * 40;
+    const dur   = 4 + Math.random() * 6;
+    ray.style.cssText = `
+        left: ${left}%;
+        --ra: ${angle}deg;
+        animation: rayDrift ${dur}s ease-in-out infinite alternate;
+        animation-delay: ${Math.random() * 4}s;
+        height: ${50 + Math.random() * 35}%;
+        opacity: ${0.3 + Math.random() * 0.4};
+    `;
+    raysContainer.appendChild(ray);
+}
+
+/* ============================================================
+   PLANKTON PARTICLES
+   ============================================================ */
+const planktonLayer = document.getElementById('planktonLayer');
+const PLANKTON_COLORS = [
+    'rgba(0,229,255,0.7)',
+    'rgba(168,85,247,0.7)',
+    'rgba(255,255,255,0.5)',
+    'rgba(0,180,255,0.6)',
+    'rgba(200,100,255,0.6)',
+];
+
+function createPlankton() {
+    const p = document.createElement('div');
+    p.className = 'plankton';
+    const size     = 2 + Math.random() * 5;
+    const x        = Math.random() * 100;
+    const dur      = 8 + Math.random() * 10;
+    const delay    = Math.random() * 8;
+    const drift    = (Math.random() - 0.5) * 80;
+    const color    = PLANKTON_COLORS[Math.floor(Math.random() * PLANKTON_COLORS.length)];
+
+    p.style.cssText = `
+        width: ${size}px; height: ${size}px;
+        left: ${x}%;
+        background: ${color};
+        box-shadow: 0 0 ${size * 3}px ${color};
+        animation-duration: ${dur}s;
+        animation-delay: ${delay}s;
+        --px: ${drift}px;
+    `;
+    planktonLayer.appendChild(p);
+    setTimeout(() => { p.remove(); createPlankton(); }, (dur + delay) * 1000);
+}
+for (let i = 0; i < 60; i++) createPlankton();
+
+/* ============================================================
+   SKILL BAR ANIMATION
+   ============================================================ */
+const fills = document.querySelectorAll('.skill-fill');
+const skillObs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const el = entry.target;
+            const w  = parseFloat(el.getAttribute('data-width'));
+            el.style.transform = `scaleX(${w})`;
+        }
+    });
+}, { threshold: 0.3 });
+fills.forEach(f => skillObs.observe(f));
+
+/* ============================================================
+   CARD ENTRANCE
+   ============================================================ */
+const cards = document.querySelectorAll('.card, .project-card');
+const cardObs = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+        if (entry.isIntersecting) {
+            setTimeout(() => {
+                entry.target.style.opacity    = '1';
+                entry.target.style.transform  = 'translateY(0)';
+            }, i * 80);
+        }
+    });
+}, { threshold: 0.1 });
+cards.forEach(c => {
+    c.style.opacity   = '0';
+    c.style.transform = 'translateY(30px)';
+    c.style.transition = 'opacity 0.55s ease, transform 0.55s ease, border-color 0.3s, box-shadow 0.3s';
+    cardObs.observe(c);
+});
+
+/* ============================================================
+   SCROLL TOP
+   ============================================================ */
+const scrollBtn = document.getElementById('scrollTop');
+window.addEventListener('scroll', () => {
+    scrollBtn.classList.toggle('show', window.scrollY > 400);
+});
+
+/* ============================================================
+   SMOOTH SCROLL
+   ============================================================ */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+        e.preventDefault();
+        const target = document.querySelector(a.getAttribute('href'));
+        if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+});
+
+/* ============================================================
+   SEND MESSAGE
+   ============================================================ */
+function sendMsg(btn) {
+    const orig = btn.innerHTML;
+    btn.innerHTML = '<i class="ri-loader-4-line" style="animation:spin 1s linear infinite"></i> Đang gửi...';
+    btn.disabled  = true;
+    setTimeout(() => {
+        btn.innerHTML = '<i class="ri-check-fill"></i> Đã gửi thành công! 🎉';
+        btn.style.background = 'linear-gradient(135deg,#22c55e,#16a34a)';
+        setTimeout(() => {
+            btn.innerHTML = orig;
+            btn.style.background = '';
+            btn.disabled = false;
+        }, 3000);
+    }, 1800);
+}
+
+/* spin keyframe */
+const ss = document.createElement('style');
+ss.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
+document.head.appendChild(ss);
+</script>
+</body>
+</html>
+<!-- The current HTML content has been uploaded. File URL: https://app-cdn.evose.ai/public/203400022740463616/html_artifact/2026-07/28/58deb6818741405b95ae475a7d9d98c2.html -->
