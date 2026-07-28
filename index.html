@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="vi">
 <head>
     <meta charset="UTF-8">
@@ -8,10 +9,9 @@
         @import url('https://fonts.googleapis.com/css2?family=Bangers&family=Nunito:wght@400;600;700;800&display=swap');
 
         :root {
-            --gold: #FFD700;
-            --orange: #FF8C00;
-            --dark: #050510;
-            --card-bg: rgba(255,255,255,0.05);
+            --cyan: #00e5ff;
+            --purple: #a855f7;
+            --dark: #020810;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -23,42 +23,62 @@
             color: #fff;
         }
 
-        /* ===== JELLYFISH CANVAS ===== */
-        #jellyfishCanvas {
+        #oceanCanvas {
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
         }
 
-        /* ===== DEEP SEA BG ===== */
         .deep-sea-bg {
             position: fixed;
             inset: 0;
             z-index: 0;
             background:
-                radial-gradient(ellipse at 20% 50%, rgba(0,80,160,0.35) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 20%, rgba(80,0,160,0.3) 0%, transparent 55%),
-                radial-gradient(ellipse at 50% 100%, rgba(0,40,120,0.5) 0%, transparent 60%),
-                linear-gradient(180deg, #000510 0%, #020820 30%, #010618 60%, #000510 100%);
+                radial-gradient(ellipse at 20% 50%, rgba(0,60,130,0.4) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 20%, rgba(60,0,130,0.3) 0%, transparent 55%),
+                radial-gradient(ellipse at 50% 100%, rgba(0,30,100,0.55) 0%, transparent 60%),
+                linear-gradient(180deg, #000508 0%, #010c1a 30%, #010510 60%, #000508 100%);
         }
 
-        /* Bioluminescent shimmer */
         .bio-shimmer {
             position: fixed;
             inset: 0;
             z-index: 0;
             background:
-                radial-gradient(ellipse at 30% 40%, rgba(0,200,255,0.04) 0%, transparent 50%),
-                radial-gradient(ellipse at 70% 60%, rgba(150,0,255,0.04) 0%, transparent 50%);
-            animation: shimmerPulse 8s ease-in-out infinite alternate;
+                radial-gradient(ellipse at 30% 40%, rgba(0,180,255,0.03) 0%, transparent 50%),
+                radial-gradient(ellipse at 70% 60%, rgba(120,0,220,0.03) 0%, transparent 50%);
+            animation: shimmerPulse 9s ease-in-out infinite alternate;
         }
         @keyframes shimmerPulse {
-            0%   { opacity: 0.5; }
+            0%   { opacity: 0.4; }
             100% { opacity: 1; }
         }
 
-        /* Floating plankton dots */
+        /* Light rays */
+        .light-rays {
+            position: fixed;
+            top: 0; left: 0; right: 0;
+            height: 65%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .ray {
+            position: absolute;
+            top: -20px;
+            width: 2px;
+            background: linear-gradient(180deg, rgba(80,180,255,0.12), transparent);
+            border-radius: 2px;
+            transform-origin: top center;
+            animation: rayDrift ease-in-out infinite alternate;
+        }
+        @keyframes rayDrift {
+            0%   { opacity: 0.15; transform: rotate(var(--ra)) scaleX(1); }
+            100% { opacity: 0.45; transform: rotate(calc(var(--ra) + 4deg)) scaleX(1.6); }
+        }
+
+        /* Plankton */
         .plankton-layer {
             position: fixed;
             inset: 0;
@@ -74,42 +94,18 @@
         @keyframes planktonFloat {
             0%   { transform: translateY(110vh) translateX(0) scale(0); opacity: 0; }
             5%   { opacity: 1; }
-            90%  { opacity: 0.6; }
+            90%  { opacity: 0.5; }
             100% { transform: translateY(-10vh) translateX(var(--px)) scale(1); opacity: 0; }
         }
 
-        /* Light rays from above */
-        .light-rays {
-            position: fixed;
-            top: 0; left: 0; right: 0;
-            height: 60%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
-        }
-        .ray {
-            position: absolute;
-            top: -20px;
-            width: 3px;
-            height: 80%;
-            background: linear-gradient(180deg, rgba(100,200,255,0.18), transparent);
-            border-radius: 2px;
-            transform-origin: top center;
-            animation: rayDrift ease-in-out infinite alternate;
-        }
-        @keyframes rayDrift {
-            0%   { opacity: 0.2; transform: rotate(var(--ra)) scaleX(1); }
-            100% { opacity: 0.6; transform: rotate(calc(var(--ra) + 4deg)) scaleX(1.5); }
-        }
-
-        /* ===== CONTENT ===== */
+        /* Content */
         .content {
             position: relative;
             z-index: 10;
             min-height: 100vh;
         }
 
-        /* ===== NAVBAR ===== */
+        /* Navbar */
         nav {
             position: fixed;
             top: 0; left: 0; right: 0;
@@ -118,20 +114,20 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: linear-gradient(180deg, rgba(0,5,20,0.85), transparent);
+            background: linear-gradient(180deg, rgba(0,4,16,0.9), transparent);
             backdrop-filter: blur(8px);
-            border-bottom: 1px solid rgba(0,200,255,0.08);
+            border-bottom: 1px solid rgba(0,200,255,0.06);
         }
         .nav-logo {
             font-family: 'Bangers', cursive;
-            font-size: 30px;
+            font-size: 28px;
             letter-spacing: 3px;
             background: linear-gradient(90deg, #00e5ff, #a855f7, #00e5ff);
             background-size: 200% auto;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             animation: logoShine 4s linear infinite;
-            filter: drop-shadow(0 0 10px rgba(0,229,255,0.6));
+            filter: drop-shadow(0 0 8px rgba(0,200,255,0.45));
         }
         @keyframes logoShine {
             0%   { background-position: 0% center; }
@@ -143,7 +139,7 @@
             list-style: none;
         }
         .nav-links a {
-            color: rgba(200,240,255,0.8);
+            color: rgba(180,230,255,0.75);
             text-decoration: none;
             font-weight: 700;
             font-size: 14px;
@@ -152,24 +148,24 @@
         }
         .nav-links a:hover {
             color: #00e5ff;
-            text-shadow: 0 0 12px rgba(0,229,255,0.8);
+            text-shadow: 0 0 10px rgba(0,229,255,0.7);
         }
         .nav-cta {
             background: linear-gradient(135deg, #00e5ff, #a855f7) !important;
             color: #000 !important;
+            -webkit-text-fill-color: #000 !important;
             padding: 8px 22px;
             border-radius: 25px;
             font-weight: 800 !important;
-            box-shadow: 0 0 18px rgba(0,229,255,0.35);
+            box-shadow: 0 0 16px rgba(0,229,255,0.3);
             transition: transform 0.2s, box-shadow 0.2s !important;
-            -webkit-text-fill-color: #000 !important;
         }
         .nav-cta:hover {
             transform: scale(1.06) !important;
-            box-shadow: 0 0 28px rgba(0,229,255,0.6) !important;
+            box-shadow: 0 0 26px rgba(0,229,255,0.55) !important;
         }
 
-        /* ===== HERO ===== */
+        /* Hero */
         #hero {
             min-height: 100vh;
             display: flex;
@@ -181,8 +177,8 @@
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: rgba(0,229,255,0.1);
-            border: 1px solid rgba(0,229,255,0.35);
+            background: rgba(0,229,255,0.08);
+            border: 1px solid rgba(0,229,255,0.3);
             border-radius: 30px;
             padding: 6px 18px;
             font-size: 13px;
@@ -192,13 +188,13 @@
             animation: badgePulse 2.5s ease-in-out infinite;
         }
         @keyframes badgePulse {
-            0%,100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.3); }
+            0%,100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.25); }
             50%     { box-shadow: 0 0 0 10px rgba(0,229,255,0); }
         }
         .hero-title {
             font-family: 'Bangers', cursive;
-            font-size: clamp(52px, 9vw, 96px);
-            line-height: 1;
+            font-size: clamp(42px, 8vw, 88px);
+            line-height: 1.05;
             letter-spacing: 3px;
             margin-bottom: 12px;
         }
@@ -212,16 +208,16 @@
             animation: logoShine 3s linear infinite;
         }
         .hero-subtitle {
-            font-size: 18px;
-            color: rgba(200,240,255,0.75);
+            font-size: 17px;
+            color: rgba(180,230,255,0.72);
             margin-bottom: 12px;
             font-weight: 600;
         }
         .hero-quote {
             font-size: 15px;
             font-style: italic;
-            color: rgba(0,229,255,0.85);
-            border-left: 3px solid #00e5ff;
+            color: rgba(0,229,255,0.78);
+            border-left: 3px solid rgba(0,229,255,0.5);
             padding-left: 14px;
             margin-bottom: 36px;
         }
@@ -229,38 +225,33 @@
         .btn-primary {
             display: inline-flex; align-items: center; gap: 8px;
             background: linear-gradient(135deg, #00e5ff, #a855f7);
-            color: #000;
-            font-weight: 800; font-size: 15px;
-            padding: 14px 32px;
-            border-radius: 50px;
+            color: #000; font-weight: 800; font-size: 15px;
+            padding: 14px 32px; border-radius: 50px;
             text-decoration: none;
-            box-shadow: 0 4px 24px rgba(0,229,255,0.35);
+            box-shadow: 0 4px 22px rgba(0,229,255,0.28);
             transition: transform 0.2s, box-shadow 0.2s;
         }
         .btn-primary:hover {
             transform: translateY(-3px) scale(1.03);
-            box-shadow: 0 8px 36px rgba(0,229,255,0.55);
+            box-shadow: 0 8px 32px rgba(0,229,255,0.45);
         }
         .btn-secondary {
             display: inline-flex; align-items: center; gap: 8px;
-            background: rgba(0,229,255,0.08);
-            border: 2px solid rgba(0,229,255,0.4);
-            color: #00e5ff;
-            font-weight: 700; font-size: 15px;
-            padding: 14px 28px;
-            border-radius: 50px;
-            text-decoration: none;
-            backdrop-filter: blur(6px);
+            background: rgba(0,229,255,0.06);
+            border: 2px solid rgba(0,229,255,0.35);
+            color: #00e5ff; font-weight: 700; font-size: 15px;
+            padding: 14px 28px; border-radius: 50px;
+            text-decoration: none; backdrop-filter: blur(6px);
             transition: border-color 0.3s, background 0.3s, transform 0.2s;
         }
         .btn-secondary:hover {
             border-color: #a855f7;
-            background: rgba(168,85,247,0.15);
+            background: rgba(168,85,247,0.12);
             transform: translateY(-3px);
             color: #a855f7;
         }
 
-        /* ===== DIVIDER ===== */
+        /* Divider */
         .section-divider {
             position: relative; z-index: 5;
             padding: 20px 5%;
@@ -268,25 +259,25 @@
         }
         .divider-line {
             flex: 1; height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0,229,255,0.4), transparent);
+            background: linear-gradient(90deg, transparent, rgba(0,229,255,0.3), transparent);
         }
         .divider-icon {
-            color: #00e5ff; font-size: 22px;
+            color: #00e5ff; font-size: 20px;
             animation: spinGlow 4s linear infinite;
         }
         @keyframes spinGlow {
             0%   { transform: rotate(0); filter: drop-shadow(0 0 4px #00e5ff); }
-            100% { transform: rotate(360deg); filter: drop-shadow(0 0 14px #a855f7); }
+            100% { transform: rotate(360deg); filter: drop-shadow(0 0 12px #a855f7); }
         }
 
-        /* ===== CARDS ===== */
+        /* Cards */
         .cards-section {
             position: relative; z-index: 5;
             padding: 20px 5% 60px;
         }
         .section-title {
             font-family: 'Bangers', cursive;
-            font-size: clamp(32px, 5vw, 54px);
+            font-size: clamp(30px, 5vw, 52px);
             letter-spacing: 2px;
             text-align: center;
             margin-bottom: 40px;
@@ -302,8 +293,8 @@
             gap: 24px;
         }
         .card {
-            background: rgba(0,229,255,0.04);
-            border: 1px solid rgba(0,229,255,0.15);
+            background: rgba(0,180,255,0.03);
+            border: 1px solid rgba(0,180,255,0.12);
             border-radius: 22px;
             padding: 28px;
             backdrop-filter: blur(16px);
@@ -313,77 +304,77 @@
         .card::before {
             content: '';
             position: absolute; inset: 0;
-            background: radial-gradient(circle at 0% 0%, rgba(0,229,255,0.07), transparent 60%);
+            background: radial-gradient(circle at 0% 0%, rgba(0,229,255,0.05), transparent 60%);
             opacity: 0; transition: opacity 0.3s;
         }
         .card:hover {
             transform: translateY(-6px);
-            border-color: rgba(0,229,255,0.5);
-            box-shadow: 0 10px 40px rgba(0,229,255,0.15), 0 0 60px rgba(168,85,247,0.1);
+            border-color: rgba(0,229,255,0.4);
+            box-shadow: 0 10px 36px rgba(0,229,255,0.1), 0 0 50px rgba(168,85,247,0.08);
         }
         .card:hover::before { opacity: 1; }
         .card-icon {
-            width: 52px; height: 52px;
+            width: 50px; height: 50px;
             background: linear-gradient(135deg, #00e5ff, #a855f7);
             border-radius: 14px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 24px; margin-bottom: 16px;
-            box-shadow: 0 4px 18px rgba(0,229,255,0.3);
+            font-size: 22px; margin-bottom: 16px;
+            box-shadow: 0 4px 16px rgba(0,229,255,0.25);
         }
         .card-icon i { color: #000; }
         .card-title {
             font-family: 'Bangers', cursive;
-            font-size: 24px; letter-spacing: 1px;
+            font-size: 23px; letter-spacing: 1px;
             color: #00e5ff; margin-bottom: 12px;
         }
         .card-text {
             font-size: 14px; line-height: 1.7;
-            color: rgba(200,240,255,0.78);
+            color: rgba(180,230,255,0.75);
         }
 
-        /* ===== SKILL BARS ===== */
+        /* Skill bars */
         .skill-list { margin-top: 14px; display: flex; flex-direction: column; gap: 13px; }
         .skill-item label {
             display: flex; justify-content: space-between;
             font-size: 13px; font-weight: 700;
-            color: rgba(200,240,255,0.9); margin-bottom: 5px;
+            color: rgba(180,230,255,0.88); margin-bottom: 5px;
         }
         .skill-bar {
             height: 8px;
-            background: rgba(0,229,255,0.1);
+            background: rgba(0,229,255,0.08);
             border-radius: 10px; overflow: hidden;
         }
         .skill-fill {
             height: 100%; border-radius: 10px;
             background: linear-gradient(90deg, #00e5ff, #a855f7);
-            box-shadow: 0 0 10px rgba(0,229,255,0.5);
+            box-shadow: 0 0 8px rgba(0,229,255,0.4);
             transform: scaleX(0);
             transform-origin: left;
             transition: transform 1.3s cubic-bezier(0.4,0,0.2,1);
         }
 
-        /* ===== PROJECTS ===== */
+        /* Projects */
         .project-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 24px;
         }
         .project-card {
-            background: rgba(0,229,255,0.03);
-            border: 1px solid rgba(0,229,255,0.12);
+            background: rgba(0,180,255,0.02);
+            border: 1px solid rgba(0,180,255,0.1);
             border-radius: 22px; overflow: hidden;
             transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
         }
         .project-card:hover {
             transform: translateY(-8px) scale(1.02);
             border-color: #00e5ff;
-            box-shadow: 0 12px 44px rgba(0,229,255,0.2), 0 0 60px rgba(168,85,247,0.12);
+            box-shadow: 0 12px 40px rgba(0,229,255,0.15), 0 0 55px rgba(168,85,247,0.1);
         }
         .project-thumb { width: 100%; height: 170px; object-fit: cover; }
         .project-body { padding: 20px; }
         .project-tag {
             display: inline-block;
-            background: rgba(0,229,255,0.15);
+            background: rgba(0,229,255,0.12);
             color: #00e5ff;
             font-size: 11px; font-weight: 800; letter-spacing: 1px;
             padding: 3px 12px; border-radius: 20px; margin-bottom: 10px;
@@ -394,7 +385,7 @@
             margin-bottom: 8px; letter-spacing: 1px;
         }
         .project-desc {
-            font-size: 13px; color: rgba(200,240,255,0.7); line-height: 1.6;
+            font-size: 13px; color: rgba(180,230,255,0.68); line-height: 1.6;
         }
         .project-links { display: flex; gap: 10px; margin-top: 16px; }
         .project-link {
@@ -405,33 +396,33 @@
         }
         .project-link:hover { transform: scale(1.05); }
         .pl-live { background: linear-gradient(135deg, #00e5ff, #a855f7); color: #000; }
-        .pl-code { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; }
+        .pl-code { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.18); color: #fff; }
 
-        /* ===== CONTACT ===== */
+        /* Contact */
         .contact-wrap {
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 32px; align-items: start;
         }
-        .contact-info { display: flex; flex-direction: column; gap: 16px; }
+        .contact-info { display: flex; flex-direction: column; gap: 14px; }
         .contact-item {
             display: flex; align-items: center; gap: 14px;
-            background: rgba(0,229,255,0.04);
-            border: 1px solid rgba(0,229,255,0.12);
-            border-radius: 14px; padding: 14px 18px;
+            background: rgba(0,229,255,0.03);
+            border: 1px solid rgba(0,229,255,0.1);
+            border-radius: 14px; padding: 13px 18px;
             transition: border-color 0.3s, box-shadow 0.3s;
         }
         .contact-item:hover {
-            border-color: #00e5ff;
-            box-shadow: 0 0 20px rgba(0,229,255,0.15);
+            border-color: rgba(0,229,255,0.45);
+            box-shadow: 0 0 18px rgba(0,229,255,0.1);
         }
-        .contact-item i { font-size: 22px; color: #00e5ff; }
-        .contact-item span { font-size: 14px; color: rgba(200,240,255,0.85); font-weight: 600; }
-        .contact-form { display: flex; flex-direction: column; gap: 14px; }
+        .contact-item i { font-size: 20px; color: #00e5ff; flex-shrink: 0; }
+        .contact-item span { font-size: 13px; color: rgba(180,230,255,0.82); font-weight: 600; word-break: break-all; }
+        .contact-form { display: flex; flex-direction: column; gap: 13px; }
         .form-group input, .form-group textarea {
             width: 100%;
-            background: rgba(0,229,255,0.05);
-            border: 1px solid rgba(0,229,255,0.18);
+            background: rgba(0,229,255,0.04);
+            border: 1px solid rgba(0,229,255,0.15);
             border-radius: 12px;
             padding: 13px 16px;
             color: #fff;
@@ -440,11 +431,11 @@
             transition: border-color 0.3s, box-shadow 0.3s;
         }
         .form-group input::placeholder, .form-group textarea::placeholder {
-            color: rgba(200,240,255,0.4);
+            color: rgba(180,230,255,0.35);
         }
         .form-group input:focus, .form-group textarea:focus {
-            border-color: #00e5ff;
-            box-shadow: 0 0 16px rgba(0,229,255,0.25);
+            border-color: rgba(0,229,255,0.5);
+            box-shadow: 0 0 14px rgba(0,229,255,0.18);
         }
         .form-group textarea { height: 120px; resize: none; }
         .btn-send {
@@ -457,20 +448,20 @@
         }
         .btn-send:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(0,229,255,0.4);
+            box-shadow: 0 8px 26px rgba(0,229,255,0.35);
         }
 
-        /* ===== FOOTER ===== */
+        /* Footer */
         footer {
             position: relative; z-index: 5;
             text-align: center;
             padding: 30px;
-            border-top: 1px solid rgba(0,229,255,0.1);
-            font-size: 13px; color: rgba(200,240,255,0.4);
+            border-top: 1px solid rgba(0,229,255,0.08);
+            font-size: 13px; color: rgba(180,230,255,0.38);
         }
         footer span { color: #00e5ff; }
 
-        /* ===== SCROLL TOP ===== */
+        /* Scroll top */
         #scrollTop {
             position: fixed;
             bottom: 30px; right: 30px;
@@ -481,51 +472,35 @@
             cursor: pointer;
             display: flex; align-items: center; justify-content: center;
             font-size: 20px; color: #000;
-            box-shadow: 0 4px 20px rgba(0,229,255,0.4);
+            box-shadow: 0 4px 18px rgba(0,229,255,0.3);
             opacity: 0; transform: translateY(20px);
             transition: opacity 0.3s, transform 0.3s;
         }
         #scrollTop.show { opacity: 1; transform: translateY(0); }
-        #scrollTop:hover { transform: scale(1.12); }
+        #scrollTop:hover { transform: scale(1.1); }
 
-        /* ===== MOBILE ===== */
+        .stat-num {
+            font-family: 'Bangers', cursive;
+            font-size: 38px; line-height: 1;
+        }
+        .stat-label { font-size: 13px; color: rgba(180,230,255,0.65); }
+        .stat-row { display: flex; align-items: center; gap: 12px; }
+
         @media (max-width: 768px) {
             .nav-links { display: none; }
             #hero { padding-top: 100px; }
             .contact-wrap { grid-template-columns: 1fr; }
         }
-
-        /* ===== STAT NUMBER ===== */
-        .stat-num {
-            font-family: 'Bangers', cursive;
-            font-size: 40px;
-            line-height: 1;
-        }
-        .stat-label {
-            font-size: 13px;
-            color: rgba(200,240,255,0.7);
-        }
-        .stat-row {
-            display: flex; align-items: center; gap: 12px;
-        }
     </style>
 </head>
 <body>
 
-<!-- DEEP SEA BACKGROUND -->
 <div class="deep-sea-bg"></div>
 <div class="bio-shimmer"></div>
-
-<!-- LIGHT RAYS -->
 <div class="light-rays" id="lightRays"></div>
-
-<!-- PLANKTON -->
 <div class="plankton-layer" id="planktonLayer"></div>
+<canvas id="oceanCanvas"></canvas>
 
-<!-- JELLYFISH CANVAS -->
-<canvas id="jellyfishCanvas"></canvas>
-
-<!-- NAVBAR -->
 <nav>
     <div class="nav-logo">🪼 ANH BA CRYPTO</div>
     <ul class="nav-links">
@@ -537,10 +512,7 @@
     </ul>
 </nav>
 
-<!-- CONTENT -->
 <div class="content">
-
-    <!-- HERO -->
     <section id="hero">
         <div class="hero-content">
             <div class="hero-badge">
@@ -548,19 +520,13 @@
             </div>
             <h1 class="hero-title">
                 <span class="title-line-1">Xin chào,</span>
-                <span class="title-line-2">Tôi là Anh Ba Crypto!</span>
+                <span class="title-line-2">Anh Ba Crypto!</span>
             </h1>
             <p class="hero-subtitle">Fullstack Web Developer · UI/UX Enthusiast</p>
-            <p class="hero-quote">
-                "Code không chỉ là nghề — đó là nghệ thuật dưới lòng đại dương." 🪼
-            </p>
+            <p class="hero-quote">"Code không chỉ là nghề — đó là nghệ thuật dưới lòng đại dương." 🪼</p>
             <div class="hero-btns">
-                <a href="#projects" class="btn-primary">
-                    <i class="ri-rocket-2-fill"></i> Xem dự án
-                </a>
-                <a href="#contact" class="btn-secondary">
-                    <i class="ri-mail-send-line"></i> Liên hệ ngay
-                </a>
+                <a href="#projects" class="btn-primary"><i class="ri-rocket-2-fill"></i> Xem dự án</a>
+                <a href="#contact" class="btn-secondary"><i class="ri-mail-send-line"></i> Liên hệ ngay</a>
             </div>
         </div>
     </section>
@@ -571,7 +537,6 @@
         <div class="divider-line"></div>
     </div>
 
-    <!-- ABOUT -->
     <section id="about" class="cards-section">
         <h2 class="section-title">🪼 Về Bản Thân</h2>
         <div class="grid-3">
@@ -593,22 +558,10 @@
                 <div class="card-icon"><i class="ri-trophy-fill"></i></div>
                 <div class="card-title">Thành tích</div>
                 <div style="display:flex;flex-direction:column;gap:16px;margin-top:4px">
-                    <div class="stat-row">
-                        <div class="stat-num" style="color:#00e5ff">10+</div>
-                        <div class="stat-label">Dự án hoàn thành</div>
-                    </div>
-                    <div class="stat-row">
-                        <div class="stat-num" style="color:#a855f7">30+</div>
-                        <div class="stat-label">Khách hàng hài lòng</div>
-                    </div>
-                    <div class="stat-row">
-                        <div class="stat-num" style="color:#fff">1+</div>
-                        <div class="stat-label">Năm kinh nghiệm</div>
-                    </div>
-                    <div class="stat-row">
-                        <div class="stat-num" style="color:#00e5ff">∞</div>
-                        <div class="stat-label">Đam mê không giới hạn</div>
-                    </div>
+                    <div class="stat-row"><div class="stat-num" style="color:#00e5ff">10+</div><div class="stat-label">Dự án hoàn thành</div></div>
+                    <div class="stat-row"><div class="stat-num" style="color:#a855f7">30+</div><div class="stat-label">Khách hàng hài lòng</div></div>
+                    <div class="stat-row"><div class="stat-num" style="color:#fff">1+</div><div class="stat-label">Năm kinh nghiệm</div></div>
+                    <div class="stat-row"><div class="stat-num" style="color:#00e5ff">∞</div><div class="stat-label">Đam mê không giới hạn</div></div>
                 </div>
             </div>
             <div class="card">
@@ -616,15 +569,15 @@
                 <div class="card-title">Triết lý</div>
                 <div style="display:flex;flex-direction:column;gap:12px;margin-top:4px">
                     <div style="display:flex;align-items:flex-start;gap:10px">
-                        <span style="font-size:18px">🔵</span>
+                        <span style="font-size:17px">🔵</span>
                         <p class="card-text"><strong style="color:#00e5ff">Không bao giờ từ bỏ</strong> — Dù bug khó đến đâu cũng phải fix bằng được.</p>
                     </div>
                     <div style="display:flex;align-items:flex-start;gap:10px">
-                        <span style="font-size:18px">🌊</span>
+                        <span style="font-size:17px">🌊</span>
                         <p class="card-text"><strong style="color:#00e5ff">Luôn học hỏi</strong> — Tech stack mới nào cũng sẵn sàng chinh phục.</p>
                     </div>
                     <div style="display:flex;align-items:flex-start;gap:10px">
-                        <span style="font-size:18px">✨</span>
+                        <span style="font-size:17px">✨</span>
                         <p class="card-text"><strong style="color:#00e5ff">Tự do sáng tạo</strong> — Code không chỉ là nghề, đó là nghệ thuật.</p>
                     </div>
                 </div>
@@ -638,7 +591,6 @@
         <div class="divider-line"></div>
     </div>
 
-    <!-- SKILLS -->
     <section id="skills" class="cards-section" style="padding-top:10px">
         <h2 class="section-title">🛠️ Kỹ Năng</h2>
         <div class="grid-3">
@@ -646,66 +598,30 @@
                 <div class="card-icon"><i class="ri-layout-fill"></i></div>
                 <div class="card-title">Frontend</div>
                 <div class="skill-list">
-                    <div class="skill-item">
-                        <label><span>HTML / CSS</span><span>60%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.95"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <label><span>JavaScript / TypeScript</span><span>80%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.90"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <label><span>React / Next.js</span><span>88%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.88"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <label><span>TailwindCSS</span><span>32%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.92"></div></div>
-                    </div>
+                    <div class="skill-item"><label><span>HTML / CSS</span><span>60%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.60"></div></div></div>
+                    <div class="skill-item"><label><span>JavaScript / TypeScript</span><span>80%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.80"></div></div></div>
+                    <div class="skill-item"><label><span>React / Next.js</span><span>88%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.88"></div></div></div>
+                    <div class="skill-item"><label><span>TailwindCSS</span><span>32%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.32"></div></div></div>
                 </div>
             </div>
             <div class="card">
                 <div class="card-icon"><i class="ri-server-fill"></i></div>
                 <div class="card-title">Backend</div>
                 <div class="skill-list">
-                    <div class="skill-item">
-                        <label><span>Node.js / Express</span><span>85%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.85"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <label><span>Python / Django</span><span>78%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.78"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <label><span>PostgreSQL / MongoDB</span><span>82%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.82"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <label><span>REST API / GraphQL</span><span>87%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.87"></div></div>
-                    </div>
+                    <div class="skill-item"><label><span>Node.js / Express</span><span>85%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.85"></div></div></div>
+                    <div class="skill-item"><label><span>Python / Django</span><span>78%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.78"></div></div></div>
+                    <div class="skill-item"><label><span>PostgreSQL / MongoDB</span><span>82%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.82"></div></div></div>
+                    <div class="skill-item"><label><span>REST API / GraphQL</span><span>87%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.87"></div></div></div>
                 </div>
             </div>
             <div class="card">
                 <div class="card-icon"><i class="ri-cloud-fill"></i></div>
                 <div class="card-title">DevOps & Tools</div>
                 <div class="skill-list">
-                    <div class="skill-item">
-                        <label><span>Git / GitHub</span><span>93%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.93"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <label><span>Docker / CI/CD</span><span>75%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.75"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <label><span>AWS / Vercel</span><span>72%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.72"></div></div>
-                    </div>
-                    <div class="skill-item">
-                        <label><span>Figma / UI Design</span><span>80%</span></label>
-                        <div class="skill-bar"><div class="skill-fill" data-width="0.80"></div></div>
-                    </div>
+                    <div class="skill-item"><label><span>Git / GitHub</span><span>93%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.93"></div></div></div>
+                    <div class="skill-item"><label><span>Docker / CI/CD</span><span>75%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.75"></div></div></div>
+                    <div class="skill-item"><label><span>AWS / Vercel</span><span>72%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.72"></div></div></div>
+                    <div class="skill-item"><label><span>Figma / UI Design</span><span>80%</span></label><div class="skill-bar"><div class="skill-fill" data-width="0.80"></div></div></div>
                 </div>
             </div>
         </div>
@@ -717,7 +633,6 @@
         <div class="divider-line"></div>
     </div>
 
-    <!-- PROJECTS -->
     <section id="projects" class="cards-section" style="padding-top:10px">
         <h2 class="section-title">💻 Dự Án Nổi Bật</h2>
         <div class="project-grid">
@@ -766,7 +681,6 @@
         <div class="divider-line"></div>
     </div>
 
-    <!-- CONTACT -->
     <section id="contact" class="cards-section" style="padding-top:10px">
         <h2 class="section-title">📡 Liên Hệ</h2>
         <div class="contact-wrap">
@@ -794,7 +708,7 @@
     </section>
 
     <footer>
-        <p>Made with <span>❤️ & 🪼 Deep Ocean Vibes</span> by <span>Anh ba crypto</span> · 2026</p>
+        <p>Made with <span>❤️ & 🪼 Deep Ocean Vibes</span> by <span>Anh Ba Crypto</span> · 2026</p>
         <p style="margin-top:6px">🌊 "The ocean is endless — so is my passion for code." 🌊</p>
     </footer>
 </div>
@@ -804,12 +718,12 @@
 </button>
 
 <script>
-/* ============================================================
-   JELLYFISH ENGINE
-   ============================================================ */
-const canvas = document.getElementById('jellyfishCanvas');
-const ctx = canvas.getContext('2d');
-
+/* ================================================================
+   OCEAN CANVAS ENGINE
+   Creatures: Jellyfish · Fish schools · Seahorse · Crab · Bubbles · Seaweed
+   ================================================================ */
+const canvas = document.getElementById('oceanCanvas');
+const ctx    = canvas.getContext('2d');
 let W = canvas.width  = window.innerWidth;
 let H = canvas.height = window.innerHeight;
 
@@ -818,326 +732,654 @@ window.addEventListener('resize', () => {
     H = canvas.height = window.innerHeight;
 });
 
-// Mouse / touch tracking
-const mouse = { x: W / 2, y: H / 2 };
+const mouse = { x: W / 2, y: H * 0.4 };
 window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
 window.addEventListener('touchmove', e => {
     mouse.x = e.touches[0].clientX;
     mouse.y = e.touches[0].clientY;
 }, { passive: true });
 
-/* ---------- Jellyfish class ---------- */
+/* ── UTILS ──────────────────────────────────────────────── */
+const rnd  = (a, b) => a + Math.random() * (b - a);
+const rndI = (a, b) => Math.floor(rnd(a, b));
+const lerp = (a, b, t) => a + (b - a) * t;
+
+/* ================================================================
+   JELLYFISH  (dim version — alpha capped at 0.28)
+   ================================================================ */
 class Jellyfish {
-    constructor(index, total) {
-        this.index   = index;
-        this.total   = total;
-        this.reset(true);
-    }
+    constructor() { this.init(true); }
+    init(randomY = false) {
+        this.x    = rnd(0, W);
+        this.y    = randomY ? rnd(-200, H + 100) : H + rnd(100, 250);
+        this.r    = rnd(22, 52);
+        this.spd  = rnd(0.25, 0.55);
+        this.drift= rnd(-0.25, 0.25);
+        this.phase= rnd(0, Math.PI * 2);
+        this.pspd = rnd(0.018, 0.032);
+        this.vx   = 0; this.vy = 0;
 
-    reset(init = false) {
-        this.x       = Math.random() * W;
-        this.y       = init ? Math.random() * H : H + 120;
-        this.baseR   = 28 + Math.random() * 38;       // bell radius
-        this.speed   = 0.3 + Math.random() * 0.5;
-        this.drift   = (Math.random() - 0.5) * 0.4;   // horizontal wander
-        this.phase   = Math.random() * Math.PI * 2;    // pulse phase
-        this.pulseSpd= 0.02 + Math.random() * 0.02;
-
-        // Colour family: cyan / violet / blue / pink
-        const palettes = [
-            { h: 185, s: 100, l: 65 },  // cyan
-            { h: 270, s: 90,  l: 70 },  // violet
-            { h: 210, s: 100, l: 65 },  // blue
-            { h: 310, s: 85,  l: 70 },  // pink
+        const pals = [
+            { h:185, s:90, l:58 },
+            { h:270, s:80, l:62 },
+            { h:210, s:95, l:60 },
+            { h:310, s:75, l:64 },
         ];
-        this.col     = palettes[Math.floor(Math.random() * palettes.length)];
-        this.alpha   = 0.55 + Math.random() * 0.35;
-
-        // Tentacle count & length
-        this.tentacleCount = 6 + Math.floor(Math.random() * 6);
-        this.tentacleLen   = this.baseR * (1.8 + Math.random() * 1.4);
-
-        // Mouse-follow vars
-        this.vx      = 0;
-        this.vy      = 0;
-        this.attracted = false;
+        this.col  = pals[rndI(0, pals.length)];
+        /* ★ dim: alpha capped at 0.28 */
+        this.alpha = rnd(0.13, 0.28);
+        this.tCount = rndI(6, 12);
+        this.tLen   = this.r * rnd(1.6, 2.4);
     }
-
-    /* -- lerp toward mouse when close -- */
-    updatePhysics() {
-        const dx = mouse.x - this.x;
-        const dy = mouse.y - this.y;
-        const dist = Math.sqrt(dx * dx + dy * dy);
-        const attractRadius = 200;
-
-        if (dist < attractRadius) {
-            // Gently steer toward cursor
-            const force = (1 - dist / attractRadius) * 0.018;
-            this.vx += dx * force;
-            this.vy += dy * force;
-            this.attracted = true;
+    update() {
+        const dx   = mouse.x - this.x;
+        const dy   = mouse.y - this.y;
+        const dist = Math.hypot(dx, dy);
+        if (dist < 190) {
+            const f = (1 - dist / 190) * 0.016;
+            this.vx += dx * f; this.vy += dy * f;
         } else {
-            // Natural upward float + gentle horizontal drift
-            this.vy -= this.speed * 0.1;
-            this.vx += this.drift * 0.05;
-            this.attracted = false;
+            this.vy -= this.spd * 0.09;
+            this.vx += this.drift * 0.04;
         }
-
-        // Damping
-        this.vx *= 0.92;
-        this.vy *= 0.92;
-
-        // Apply
-        this.x += this.vx;
-        this.y += this.vy + (this.attracted ? 0 : -this.speed * 0.4);
-
-        // Wrap horizontally
-        if (this.x < -100) this.x = W + 100;
-        if (this.x > W + 100) this.x = -100;
-
-        // Reset when off top
-        if (this.y < -200) this.reset(false);
+        this.vx *= 0.91; this.vy *= 0.91;
+        this.x  += this.vx;
+        this.y  += this.vy - this.spd * 0.35;
+        if (this.x < -120) this.x = W + 120;
+        if (this.x > W + 120) this.x = -120;
+        if (this.y < -220) this.init(false);
     }
-
     draw() {
-        const t     = performance.now() * 0.001;
-        const pulse = Math.sin(t * 2 + this.phase);           // -1 to 1
-        const r     = this.baseR + pulse * this.baseR * 0.18; // breathing bell
-
+        const t  = performance.now() * 0.001;
+        const p  = Math.sin(t * 2 + this.phase);
+        const r  = this.r + p * this.r * 0.16;
         const { h, s, l } = this.col;
-        const a = this.alpha;
+        const a  = this.alpha;
 
         ctx.save();
         ctx.translate(this.x, this.y);
 
-        /* ---- Outer glow ---- */
-        const glow = ctx.createRadialGradient(0, 0, r * 0.1, 0, 0, r * 2.8);
-        glow.addColorStop(0, `hsla(${h},${s}%,${l}%,${a * 0.25})`);
+        /* outer glow — very faint */
+        const glow = ctx.createRadialGradient(0,0,r*0.1, 0,0,r*2.4);
+        glow.addColorStop(0, `hsla(${h},${s}%,${l}%,${a*0.18})`);
         glow.addColorStop(1, `hsla(${h},${s}%,${l}%,0)`);
+        ctx.beginPath(); ctx.arc(0,0,r*2.4,0,Math.PI*2);
+        ctx.fillStyle = glow; ctx.fill();
+
+        /* bell */
+        const bg = ctx.createRadialGradient(-r*.22,-r*.28,r*.04, 0,0,r);
+        bg.addColorStop(0, `hsla(${h},${s}%,${Math.min(l+18,90)}%,${a})`);
+        bg.addColorStop(.6, `hsla(${h},${s}%,${l}%,${a*.82})`);
+        bg.addColorStop(1,  `hsla(${h},${s}%,${l-18}%,${a*.45})`);
         ctx.beginPath();
-        ctx.arc(0, 0, r * 2.8, 0, Math.PI * 2);
-        ctx.fillStyle = glow;
-        ctx.fill();
+        ctx.ellipse(0,0,r,r*.7,0,Math.PI,0);
+        ctx.bezierCurveTo(r,0, r*.88,r*.32, 0,r*.36);
+        ctx.bezierCurveTo(-r*.88,r*.32, -r,0, -r,0);
+        ctx.fillStyle = bg; ctx.fill();
 
-        /* ---- Bell body ---- */
-        const bellGrad = ctx.createRadialGradient(-r * 0.25, -r * 0.3, r * 0.05, 0, 0, r);
-        bellGrad.addColorStop(0, `hsla(${h},${s}%,${Math.min(l+20,95)}%,${a})`);
-        bellGrad.addColorStop(0.6, `hsla(${h},${s}%,${l}%,${a * 0.85})`);
-        bellGrad.addColorStop(1, `hsla(${h},${s}%,${l - 20}%,${a * 0.5})`);
-
+        /* rim */
         ctx.beginPath();
-        // Top dome (semi-ellipse)
-        ctx.ellipse(0, 0, r, r * 0.72, 0, Math.PI, 0);
-        // Bottom skirt curve
-        ctx.bezierCurveTo(r, 0, r * 0.9, r * 0.35, 0, r * 0.38);
-        ctx.bezierCurveTo(-r * 0.9, r * 0.35, -r, 0, -r, 0);
-        ctx.fillStyle = bellGrad;
-        ctx.fill();
+        ctx.ellipse(0,0,r,r*.7,0,Math.PI,0);
+        ctx.strokeStyle = `hsla(${h},${s}%,88%,${a*.55})`;
+        ctx.lineWidth = 1.2; ctx.stroke();
 
-        /* ---- Inner highlight ---- */
-        const hiGrad = ctx.createRadialGradient(-r * 0.2, -r * 0.28, 0, -r * 0.2, -r * 0.28, r * 0.55);
-        hiGrad.addColorStop(0, `hsla(${h},${s}%,98%,${a * 0.55})`);
-        hiGrad.addColorStop(1, `hsla(${h},${s}%,98%,0)`);
-        ctx.beginPath();
-        ctx.ellipse(-r * 0.2, -r * 0.28, r * 0.5, r * 0.32, 0, 0, Math.PI * 2);
-        ctx.fillStyle = hiGrad;
-        ctx.fill();
-
-        /* ---- Rim glow ---- */
-        ctx.beginPath();
-        ctx.ellipse(0, 0, r, r * 0.72, 0, Math.PI, 0);
-        ctx.strokeStyle = `hsla(${h},${s}%,90%,${a * 0.7})`;
-        ctx.lineWidth   = 1.5;
-        ctx.stroke();
-
-        /* ---- Tentacles ---- */
-        for (let i = 0; i < this.tentacleCount; i++) {
-            const angle = ((i / this.tentacleCount) - 0.5) * Math.PI * 0.9;
-            const sx    = Math.sin(angle) * r * 0.85;
-            const sy    = Math.cos(angle) * r * 0.18 + r * 0.28;
-
-            // Each tentacle waves with its own phase
-            const wavePhase = t * 1.4 + this.phase + i * 0.7;
-            const waveAmp   = this.tentacleLen * 0.18;
-
-            ctx.beginPath();
-            ctx.moveTo(sx, sy);
-
-            // 3-segment bezier tentacle
-            const segments = 4;
-            let px = sx, py = sy;
-            const segLen = this.tentacleLen / segments;
-
-            for (let s2 = 0; s2 < segments; s2++) {
-                const wave = Math.sin(wavePhase + s2 * 1.2) * waveAmp * (s2 + 1) / segments;
-                const nx   = sx + wave * 0.9 + (Math.sin(angle) * 0.3 * segLen * s2);
-                const ny   = sy + (s2 + 1) * segLen;
-                const cpx  = (px + nx) / 2 + wave;
-                const cpy  = (py + ny) / 2;
-                ctx.quadraticCurveTo(cpx, cpy, nx, ny);
+        /* tentacles */
+        for (let i = 0; i < this.tCount; i++) {
+            const ang = ((i / this.tCount) - .5) * Math.PI * .88;
+            const sx  = Math.sin(ang) * r * .82;
+            const sy  = Math.cos(ang) * r * .16 + r * .26;
+            const wp  = t * 1.3 + this.phase + i * .65;
+            const wa  = this.tLen * .16;
+            ctx.beginPath(); ctx.moveTo(sx, sy);
+            const segs = 4; let px = sx, py = sy;
+            const sl2  = this.tLen / segs;
+            for (let s2 = 0; s2 < segs; s2++) {
+                const wv = Math.sin(wp + s2 * 1.1) * wa * (s2+1) / segs;
+                const nx = sx + wv * .85 + (Math.sin(ang) * .28 * sl2 * s2);
+                const ny = sy + (s2+1) * sl2;
+                ctx.quadraticCurveTo((px+nx)/2+wv, (py+ny)/2, nx, ny);
                 px = nx; py = ny;
             }
-
-            // Tentacle gradient: opaque at top, fade at bottom
-            const tGrad = ctx.createLinearGradient(sx, sy, px, py);
-            tGrad.addColorStop(0, `hsla(${h},${s}%,${l + 10}%,${a * 0.85})`);
-            tGrad.addColorStop(1, `hsla(${h},${s}%,${l}%,0)`);
-            ctx.strokeStyle = tGrad;
-            ctx.lineWidth   = 1.2 + Math.random() * 0.5;
-            ctx.lineCap     = 'round';
-            ctx.stroke();
+            const tg = ctx.createLinearGradient(sx, sy, px, py);
+            tg.addColorStop(0, `hsla(${h},${s}%,${l+8}%,${a*.7})`);
+            tg.addColorStop(1, `hsla(${h},${s}%,${l}%,0)`);
+            ctx.strokeStyle = tg; ctx.lineWidth = 1.1; ctx.lineCap = 'round'; ctx.stroke();
         }
-
-        /* ---- Spots / internal pattern ---- */
-        const spotCount = 3 + Math.floor(this.baseR / 15);
-        for (let i = 0; i < spotCount; i++) {
-            const sx2 = (Math.random() - 0.5) * r * 1.1;
-            const sy2 = (Math.random() - 0.5) * r * 0.5 - r * 0.1;
-            const sr  = r * 0.06 + Math.random() * r * 0.08;
-            ctx.beginPath();
-            ctx.arc(sx2, sy2, sr, 0, Math.PI * 2);
-            ctx.fillStyle = `hsla(${h},100%,95%,${a * 0.35})`;
-            ctx.fill();
-        }
-
         ctx.restore();
     }
 }
 
-/* ---------- Create jellies ---------- */
-const JELLY_COUNT = 18;
-const jellies = Array.from({ length: JELLY_COUNT }, (_, i) => new Jellyfish(i, JELLY_COUNT));
+/* ================================================================
+   FISH  (small tropical schooling fish)
+   ================================================================ */
+class Fish {
+    constructor(leader = null) {
+        this.leader = leader;
+        this.init();
+    }
+    init() {
+        this.x   = rnd(0, W);
+        this.y   = rnd(H * .05, H * .9);
+        this.spd = rnd(1.0, 2.2);
+        this.dir = rnd(-Math.PI, Math.PI);   // current heading
+        this.vx  = Math.cos(this.dir) * this.spd;
+        this.vy  = Math.sin(this.dir) * this.spd;
+        this.sz  = rnd(7, 14);
+        this.wobble = 0;
+        this.wobbleSpd = rnd(0.15, 0.3);
 
-/* ---------- Animation loop ---------- */
+        const fishCols = [
+            { body:'#e8a020', stripe:'#fff' },
+            { body:'#3590e8', stripe:'#a0d8ff' },
+            { body:'#e84040', stripe:'#ffb0b0' },
+            { body:'#40c890', stripe:'#b0ffe8' },
+            { body:'#d060e0', stripe:'#f0b0ff' },
+        ];
+        this.col = fishCols[rndI(0, fishCols.length)];
+        this.flip = this.vx < 0 ? -1 : 1;
+    }
+    update() {
+        /* gently steer toward leader or wander */
+        if (this.leader) {
+            const tx = this.leader.x + rnd(-40, 40);
+            const ty = this.leader.y + rnd(-30, 30);
+            const dx = tx - this.x, dy = ty - this.y;
+            const d  = Math.hypot(dx, dy) + 0.01;
+            this.vx += (dx / d) * 0.06;
+            this.vy += (dy / d) * 0.06;
+        } else {
+            /* slight random wander */
+            this.vx += rnd(-0.04, 0.04);
+            this.vy += rnd(-0.02, 0.02);
+        }
+
+        /* mouse avoidance */
+        const mdx = this.x - mouse.x, mdy = this.y - mouse.y;
+        const mdist = Math.hypot(mdx, mdy);
+        if (mdist < 120) {
+            const f = (1 - mdist / 120) * 0.12;
+            this.vx += mdx * f; this.vy += mdy * f;
+        }
+
+        /* clamp speed */
+        const spd = Math.hypot(this.vx, this.vy);
+        if (spd > 2.4) { this.vx = this.vx / spd * 2.4; this.vy = this.vy / spd * 2.4; }
+        if (spd < 0.5) { this.vx = this.vx / (spd+.001) * 0.5; this.vy = this.vy / (spd+.001) * 0.5; }
+
+        this.x += this.vx; this.y += this.vy;
+        this.wobble += this.wobbleSpd;
+        this.flip = this.vx < 0 ? -1 : 1;
+
+        /* wrap */
+        if (this.x < -30)    this.x = W + 30;
+        if (this.x > W + 30) this.x = -30;
+        if (this.y < 0)      this.y = H;
+        if (this.y > H)      this.y = 0;
+    }
+    draw() {
+        const sz = this.sz;
+        const wo = Math.sin(this.wobble) * 0.25;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.scale(this.flip, 1);
+        ctx.rotate(wo);
+
+        /* body */
+        ctx.beginPath();
+        ctx.ellipse(0, 0, sz, sz * 0.45, 0, 0, Math.PI * 2);
+        ctx.fillStyle = this.col.body;
+        ctx.globalAlpha = 0.82;
+        ctx.fill();
+
+        /* stripe */
+        ctx.beginPath();
+        ctx.ellipse(sz * 0.05, 0, sz * 0.22, sz * 0.32, 0, 0, Math.PI * 2);
+        ctx.fillStyle = this.col.stripe;
+        ctx.globalAlpha = 0.38;
+        ctx.fill();
+
+        /* tail */
+        ctx.beginPath();
+        ctx.moveTo(-sz, 0);
+        ctx.lineTo(-sz * 1.55,  sz * 0.42);
+        ctx.lineTo(-sz * 1.55, -sz * 0.42);
+        ctx.closePath();
+        ctx.fillStyle = this.col.body;
+        ctx.globalAlpha = 0.75;
+        ctx.fill();
+
+        /* eye */
+        ctx.beginPath();
+        ctx.arc(sz * 0.55, -sz * 0.05, sz * 0.14, 0, Math.PI * 2);
+        ctx.fillStyle = '#fff';
+        ctx.globalAlpha = 0.9;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(sz * 0.57, -sz * 0.05, sz * 0.07, 0, Math.PI * 2);
+        ctx.fillStyle = '#111';
+        ctx.globalAlpha = 1;
+        ctx.fill();
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+    }
+}
+
+/* ================================================================
+   SEAHORSE
+   ================================================================ */
+class Seahorse {
+    constructor() { this.init(true); }
+    init(rand = false) {
+        this.x    = rnd(W * .05, W * .95);
+        this.y    = rand ? rnd(H * .1, H * .8) : H + 60;
+        this.spd  = rnd(0.18, 0.38);
+        this.drift= rnd(-0.12, 0.12);
+        this.sz   = rnd(18, 30);
+        this.phase= rnd(0, Math.PI * 2);
+        this.vx   = 0; this.vy = 0;
+        this.col  = `hsl(${rndI(170,310)},70%,58%)`;
+    }
+    update() {
+        const t   = performance.now() * 0.001;
+        this.x   += Math.sin(t * 0.8 + this.phase) * 0.3 + this.drift * 0.3;
+        this.y   -= this.spd * 0.28;
+        if (this.y < -100) this.init(false);
+        if (this.x < 0) this.x = W;
+        if (this.x > W) this.x = 0;
+    }
+    draw() {
+        const t  = performance.now() * 0.001;
+        const sz = this.sz;
+        const sw = Math.sin(t * 2.5 + this.phase) * 0.18; // gentle sway
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.rotate(sw);
+        ctx.globalAlpha = 0.7;
+
+        /* body curve */
+        ctx.beginPath();
+        ctx.moveTo(0, -sz);
+        ctx.bezierCurveTo(sz*.7, -sz*.5, sz*.8, sz*.2, sz*.3, sz*.7);
+        ctx.bezierCurveTo(sz*.1, sz*1.1, -sz*.4, sz*1.2, -sz*.3, sz*.8);
+        ctx.bezierCurveTo(-sz*.6, sz*.3, -sz*.5, -sz*.3, 0, -sz);
+        ctx.fillStyle = this.col;
+        ctx.fill();
+
+        /* belly highlight */
+        ctx.beginPath();
+        ctx.ellipse(sz*.1, sz*.1, sz*.2, sz*.45, 0.3, 0, Math.PI*2);
+        ctx.fillStyle = 'rgba(255,255,255,0.2)';
+        ctx.fill();
+
+        /* head / snout */
+        ctx.beginPath();
+        ctx.ellipse(0, -sz, sz*.28, sz*.2, 0, 0, Math.PI*2);
+        ctx.fillStyle = this.col;
+        ctx.fill();
+        ctx.beginPath();
+        ctx.moveTo(sz*.2, -sz*1.18);
+        ctx.lineTo(sz*.55, -sz*1.42);
+        ctx.strokeStyle = this.col;
+        ctx.lineWidth = sz * .12;
+        ctx.lineCap = 'round';
+        ctx.stroke();
+
+        /* eye */
+        ctx.beginPath();
+        ctx.arc(sz*.12, -sz*1.04, sz*.08, 0, Math.PI*2);
+        ctx.fillStyle = '#fff';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(sz*.13, -sz*1.04, sz*.04, 0, Math.PI*2);
+        ctx.fillStyle = '#111';
+        ctx.fill();
+
+        /* dorsal fin */
+        ctx.beginPath();
+        ctx.moveTo(-sz*.1, -sz*.6);
+        ctx.bezierCurveTo(-sz*.5,-sz*.9, -sz*.8,-sz*.5, -sz*.4,-sz*.2);
+        ctx.strokeStyle = `hsla(${this.col},0.5)`;
+        ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+    }
+}
+
+/* ================================================================
+   CRAB  (walks along bottom)
+   ================================================================ */
+class Crab {
+    constructor() { this.init(); }
+    init() {
+        this.x   = rnd(0, W);
+        this.y   = H - rnd(18, 40);
+        this.spd = rnd(0.3, 0.85) * (Math.random() < .5 ? 1 : -1);
+        this.sz  = rnd(14, 26);
+        this.legPhase = rnd(0, Math.PI * 2);
+        this.col = `hsl(${rndI(0,30)},80%,48%)`;
+    }
+    update() {
+        this.x += this.spd;
+        this.legPhase += 0.12;
+        if (this.x < -60) this.x = W + 60;
+        if (this.x > W + 60) this.x = -60;
+        this.y = H - rnd(15, 35); // slight bobble on floor
+    }
+    draw() {
+        const sz = this.sz;
+        const lp = this.legPhase;
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        ctx.scale(this.spd < 0 ? -1 : 1, 1);
+        ctx.globalAlpha = 0.78;
+
+        /* body */
+        ctx.beginPath();
+        ctx.ellipse(0, 0, sz, sz * .55, 0, 0, Math.PI * 2);
+        ctx.fillStyle = this.col;
+        ctx.fill();
+
+        /* shell pattern */
+        ctx.beginPath();
+        ctx.ellipse(0, -sz*.08, sz*.65, sz*.38, 0, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,200,150,0.25)';
+        ctx.fill();
+
+        /* legs — 3 pairs */
+        const legAngles = [-0.65, -0.2, 0.2];
+        legAngles.forEach((ba, i) => {
+            const swing = Math.sin(lp + i * 1.1) * 0.28;
+            [-1, 1].forEach(side => {
+                ctx.save();
+                ctx.rotate(ba * side);
+                ctx.beginPath();
+                ctx.moveTo(sz * .7 * side, 0);
+                const ex = (sz * 1.7 + Math.sin(swing * side) * sz * .4) * side;
+                const ey = sz * .6 + Math.cos(swing) * sz * .3;
+                ctx.lineTo(ex, ey);
+                ctx.strokeStyle = this.col;
+                ctx.lineWidth = sz * .1;
+                ctx.lineCap = 'round';
+                ctx.stroke();
+                ctx.restore();
+            });
+        });
+
+        /* claws */
+        [-1, 1].forEach(side => {
+            const clawSwing = Math.sin(lp * .8) * 0.3 * side;
+            ctx.save();
+            ctx.translate(sz * .9 * side, -sz * .1);
+            ctx.rotate(clawSwing);
+            ctx.beginPath();
+            ctx.arc(0, 0, sz * .32, 0, Math.PI * 2);
+            ctx.fillStyle = `hsl(${parseInt(this.col.match(/\d+/)[0]) + 10},75%,40%)`;
+            ctx.fill();
+            ctx.restore();
+        });
+
+        /* eyes on stalks */
+        [-1, 1].forEach(side => {
+            ctx.beginPath();
+            ctx.moveTo(sz * .3 * side, -sz * .45);
+            ctx.lineTo(sz * .45 * side, -sz * .75);
+            ctx.strokeStyle = this.col;
+            ctx.lineWidth = sz * .09;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(sz * .45 * side, -sz * .78, sz * .12, 0, Math.PI * 2);
+            ctx.fillStyle = '#fff';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.arc(sz * .46 * side, -sz * .78, sz * .06, 0, Math.PI * 2);
+            ctx.fillStyle = '#111';
+            ctx.fill();
+        });
+
+        ctx.globalAlpha = 1;
+        ctx.restore();
+    }
+}
+
+/* ================================================================
+   BUBBLE
+   ================================================================ */
+class Bubble {
+    constructor() { this.init(true); }
+    init(rand = false) {
+        this.x    = rnd(0, W);
+        this.y    = rand ? rnd(0, H) : H + rnd(10, 60);
+        this.r    = rnd(2, 9);
+        this.spd  = rnd(0.4, 1.1);
+        this.wobX = rnd(0.4, 1.4);
+        this.phase= rnd(0, Math.PI * 2);
+    }
+    update() {
+        const t = performance.now() * 0.001;
+        this.y -= this.spd;
+        this.x += Math.sin(t * this.wobX + this.phase) * 0.5;
+        if (this.y < -20) this.init(false);
+    }
+    draw() {
+        ctx.save();
+        ctx.globalAlpha = 0.25;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI * 2);
+        ctx.strokeStyle = 'rgba(150,230,255,0.7)';
+        ctx.lineWidth = 0.9;
+        ctx.stroke();
+        /* highlight */
+        ctx.beginPath();
+        ctx.arc(this.x - this.r * .28, this.y - this.r * .28, this.r * .3, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,255,255,0.5)';
+        ctx.fill();
+        ctx.globalAlpha = 1;
+        ctx.restore();
+    }
+}
+
+/* ================================================================
+   SEAWEED  (static but sways — drawn last as decoration)
+   ================================================================ */
+class Seaweed {
+    constructor() {
+        this.x      = rnd(0, W);
+        this.h      = rnd(60, 160);
+        this.segs   = rndI(5, 10);
+        this.phase  = rnd(0, Math.PI * 2);
+        this.spd    = rnd(0.5, 1.2);
+        this.col    = `hsl(${rndI(130,170)},65%,${rndI(28,45)}%)`;
+        this.width  = rnd(3, 7);
+    }
+    draw() {
+        const t    = performance.now() * 0.001;
+        const segH = this.h / this.segs;
+        ctx.save();
+        ctx.globalAlpha = 0.55;
+        ctx.strokeStyle = this.col;
+        ctx.lineWidth   = this.width;
+        ctx.lineCap     = 'round';
+        ctx.lineJoin    = 'round';
+
+        ctx.beginPath();
+        ctx.moveTo(this.x, H);
+
+        let cx = this.x, cy = H;
+        for (let i = 0; i < this.segs; i++) {
+            const sway = Math.sin(t * this.spd + this.phase + i * 0.6) * 12 * (i / this.segs);
+            const nx   = this.x + sway;
+            const ny   = H - (i + 1) * segH;
+            ctx.quadraticCurveTo(cx + sway * 1.5, (cy + ny) / 2, nx, ny);
+            cx = nx; cy = ny;
+        }
+        ctx.stroke();
+        ctx.globalAlpha = 1;
+        ctx.restore();
+    }
+}
+
+/* ================================================================
+   INSTANTIATE ALL CREATURES
+   ================================================================ */
+const JELLY_COUNT = 14;
+const jellies = Array.from({ length: JELLY_COUNT }, () => new Jellyfish());
+
+/* Fish schools — 3 leaders + followers */
+const fishLeaders = [new Fish(), new Fish(), new Fish()];
+const fishSchool  = [
+    ...fishLeaders,
+    ...Array.from({ length: 18 }, () => new Fish(fishLeaders[rndI(0, fishLeaders.length)]))
+];
+
+const seahorses = Array.from({ length: 5 },  () => new Seahorse());
+const crabs     = Array.from({ length: 6 },  () => new Crab());
+const bubbles   = Array.from({ length: 55 }, () => new Bubble());
+const seaweeds  = Array.from({ length: 18 }, () => new Seaweed());
+
+/* ================================================================
+   MAIN LOOP
+   ================================================================ */
 function animate() {
-    // Semi-transparent clear for motion trail
-    ctx.fillStyle = 'rgba(0,0,0,0)';
     ctx.clearRect(0, 0, W, H);
 
-    jellies.forEach(j => {
-        j.updatePhysics();
-        j.draw();
-    });
+    /* seaweed (background layer) */
+    seaweeds.forEach(s => s.draw());
+
+    /* bubbles */
+    bubbles.forEach(b => { b.update(); b.draw(); });
+
+    /* crabs */
+    crabs.forEach(c => { c.update(); c.draw(); });
+
+    /* fish school */
+    fishSchool.forEach(f => { f.update(); f.draw(); });
+
+    /* seahorses */
+    seahorses.forEach(s => { s.update(); s.draw(); });
+
+    /* jellies (top layer — faint) */
+    jellies.forEach(j => { j.update(); j.draw(); });
 
     requestAnimationFrame(animate);
 }
 animate();
 
-/* ============================================================
+/* ================================================================
    LIGHT RAYS
-   ============================================================ */
+   ================================================================ */
 const raysContainer = document.getElementById('lightRays');
 for (let i = 0; i < 10; i++) {
-    const ray = document.createElement('div');
+    const ray   = document.createElement('div');
     ray.className = 'ray';
     const left  = 10 + Math.random() * 80;
-    const angle = -20 + Math.random() * 40;
-    const dur   = 4 + Math.random() * 6;
+    const angle = -22 + Math.random() * 44;
+    const dur   = 5 + Math.random() * 6;
     ray.style.cssText = `
         left: ${left}%;
         --ra: ${angle}deg;
-        animation: rayDrift ${dur}s ease-in-out infinite alternate;
-        animation-delay: ${Math.random() * 4}s;
-        height: ${50 + Math.random() * 35}%;
-        opacity: ${0.3 + Math.random() * 0.4};
+        animation-duration: ${dur}s;
+        animation-delay: ${Math.random() * 5}s;
+        height: ${45 + Math.random() * 35}%;
+        opacity: ${0.2 + Math.random() * 0.35};
     `;
     raysContainer.appendChild(ray);
 }
 
-/* ============================================================
+/* ================================================================
    PLANKTON PARTICLES
-   ============================================================ */
+   ================================================================ */
 const planktonLayer = document.getElementById('planktonLayer');
-const PLANKTON_COLORS = [
-    'rgba(0,229,255,0.7)',
-    'rgba(168,85,247,0.7)',
-    'rgba(255,255,255,0.5)',
-    'rgba(0,180,255,0.6)',
-    'rgba(200,100,255,0.6)',
+const pCols = [
+    'rgba(0,200,255,0.55)',
+    'rgba(150,80,240,0.55)',
+    'rgba(255,255,255,0.38)',
+    'rgba(0,160,220,0.5)',
+    'rgba(180,90,240,0.5)',
 ];
-
-function createPlankton() {
-    const p = document.createElement('div');
+function spawnPlankton() {
+    const p   = document.createElement('div');
     p.className = 'plankton';
-    const size     = 2 + Math.random() * 5;
-    const x        = Math.random() * 100;
-    const dur      = 8 + Math.random() * 10;
-    const delay    = Math.random() * 8;
-    const drift    = (Math.random() - 0.5) * 80;
-    const color    = PLANKTON_COLORS[Math.floor(Math.random() * PLANKTON_COLORS.length)];
-
+    const sz  = rnd(1.5, 4.5);
+    const x   = rnd(0, 100);
+    const dur = rnd(9, 18);
+    const del = rnd(0, 9);
+    const drift = rnd(-60, 60);
+    const col = pCols[rndI(0, pCols.length)];
     p.style.cssText = `
-        width: ${size}px; height: ${size}px;
-        left: ${x}%;
-        background: ${color};
-        box-shadow: 0 0 ${size * 3}px ${color};
-        animation-duration: ${dur}s;
-        animation-delay: ${delay}s;
-        --px: ${drift}px;
+        width:${sz}px; height:${sz}px;
+        left:${x}%;
+        background:${col};
+        box-shadow:0 0 ${sz*2.5}px ${col};
+        animation-duration:${dur}s;
+        animation-delay:${del}s;
+        --px:${drift}px;
     `;
     planktonLayer.appendChild(p);
-    setTimeout(() => { p.remove(); createPlankton(); }, (dur + delay) * 1000);
+    setTimeout(() => { p.remove(); spawnPlankton(); }, (dur + del) * 1000);
 }
-for (let i = 0; i < 60; i++) createPlankton();
+for (let i = 0; i < 55; i++) spawnPlankton();
 
-/* ============================================================
-   SKILL BAR ANIMATION
-   ============================================================ */
-const fills = document.querySelectorAll('.skill-fill');
+/* ================================================================
+   SKILL BARS
+   ================================================================ */
+const fills   = document.querySelectorAll('.skill-fill');
 const skillObs = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const el = entry.target;
-            const w  = parseFloat(el.getAttribute('data-width'));
-            el.style.transform = `scaleX(${w})`;
+    entries.forEach(e => {
+        if (e.isIntersecting) {
+            const el = e.target;
+            el.style.transform = `scaleX(${el.getAttribute('data-width')})`;
         }
     });
 }, { threshold: 0.3 });
 fills.forEach(f => skillObs.observe(f));
 
-/* ============================================================
+/* ================================================================
    CARD ENTRANCE
-   ============================================================ */
-const cards = document.querySelectorAll('.card, .project-card');
+   ================================================================ */
+const cards   = document.querySelectorAll('.card, .project-card');
 const cardObs = new IntersectionObserver(entries => {
-    entries.forEach((entry, i) => {
-        if (entry.isIntersecting) {
+    entries.forEach((e, i) => {
+        if (e.isIntersecting) {
             setTimeout(() => {
-                entry.target.style.opacity    = '1';
-                entry.target.style.transform  = 'translateY(0)';
-            }, i * 80);
+                e.target.style.opacity   = '1';
+                e.target.style.transform = 'translateY(0)';
+            }, i * 75);
         }
     });
-}, { threshold: 0.1 });
+}, { threshold: 0.08 });
 cards.forEach(c => {
     c.style.opacity   = '0';
-    c.style.transform = 'translateY(30px)';
-    c.style.transition = 'opacity 0.55s ease, transform 0.55s ease, border-color 0.3s, box-shadow 0.3s';
+    c.style.transform = 'translateY(28px)';
+    c.style.transition = 'opacity 0.55s ease, transform 0.55s ease, border-color .3s, box-shadow .3s';
     cardObs.observe(c);
 });
 
-/* ============================================================
+/* ================================================================
    SCROLL TOP
-   ============================================================ */
+   ================================================================ */
 const scrollBtn = document.getElementById('scrollTop');
 window.addEventListener('scroll', () => {
     scrollBtn.classList.toggle('show', window.scrollY > 400);
 });
 
-/* ============================================================
+/* ================================================================
    SMOOTH SCROLL
-   ============================================================ */
+   ================================================================ */
 document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
         e.preventDefault();
-        const target = document.querySelector(a.getAttribute('href'));
-        if (target) target.scrollIntoView({ behavior: 'smooth' });
+        const t = document.querySelector(a.getAttribute('href'));
+        if (t) t.scrollIntoView({ behavior: 'smooth' });
     });
 });
 
-/* ============================================================
+/* ================================================================
    SEND MESSAGE
-   ============================================================ */
+   ================================================================ */
 function sendMsg(btn) {
     const orig = btn.innerHTML;
     btn.innerHTML = '<i class="ri-loader-4-line" style="animation:spin 1s linear infinite"></i> Đang gửi...';
@@ -1153,11 +1395,10 @@ function sendMsg(btn) {
     }, 1800);
 }
 
-/* spin keyframe */
 const ss = document.createElement('style');
 ss.textContent = '@keyframes spin { to { transform: rotate(360deg); } }';
 document.head.appendChild(ss);
 </script>
 </body>
 </html>
-<!-- The current HTML content has been uploaded. File URL: https://app-cdn.evose.ai/public/203400022740463616/html_artifact/2026-07/28/58deb6818741405b95ae475a7d9d98c2.html -->
+<!-- The current HTML content has been uploaded. File URL: https://app-cdn.evose.ai/public/203400022740463616/html_artifact/2026-07/28/a35a596872e14df5988b1129b7db84a4.html -->
